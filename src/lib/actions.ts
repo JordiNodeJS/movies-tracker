@@ -206,16 +206,10 @@ export async function getProfileData() {
     }),
   ]);
 
-  const recommendations = await Promise.all(
-    recs.map(async (rec) => {
-      try {
-        const movie = await getMovieDetails(rec.movieId);
-        return { ...rec, title: movie.title };
-      } catch (error) {
-        return { ...rec, title: "Unknown Movie" };
-      }
-    })
-  );
+  const recommendations = recs.map((rec) => ({
+    ...rec,
+    title: rec.title || "Unknown Movie",
+  }));
 
   const allRatings = await prisma.rating.findMany({
     where: { userId: MOCK_USER_ID },

@@ -86,14 +86,18 @@ model ViewHistory {
 }
 
 model Recommendation {
-  id        String   @id @default(cuid())
-  userId    String
-  movieId   Int
-  score     Float
-  reason    String?
-  createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String   @id @default(cuid())
+  userId      String
+  movieId     Int
+  title       String?
+  posterPath  String?
+  voteAverage Float?   @default(0)
+  score       Float
+  reason      String?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, movieId])
   @@map("recommendations")
 }
 

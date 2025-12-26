@@ -5,77 +5,127 @@ import { fetchTMDB } from "@/lib/tmdb";
 
 const MOCK_USER_ID = "user_123";
 
-export async function generateRecommendations(language: string = 'en') {
-  // 1. Get user's high rated movies (8+)
+export async function generateRecommendations(language: string = "en") {
+  // 1. Get user's high rated movies (8+) for genre preference
   const highRated = await prisma.rating.findMany({
     where: { userId: MOCK_USER_ID, value: { gte: 8 } },
     select: { movieId: true },
   });
 
-  // 2. Get user's watchlist
-  const watchlist = await prisma.watchlistItem.findMany({
-    where: { userId: MOCK_USER_ID },
-    select: { movieId: true },
-  });
-
-  const seenMovieIds = new Set([
-    ...highRated.map((r: { movieId: number }) => r.movieId),
-    ...watchlist.map((w: { movieId: number }) => w.movieId),
+  // 2. Get ALL user interactions to filter them out
+  const [watchlist, allRatings, notes] = await Promise.all([
+    prisma.watchlistItem.findMany({
+      where: { userId: MOCK_USER_ID },
+      select: { movieId: true },
+    }),
+    prisma.rating.findMany({
+      where: { userId: MOCK_USER_ID },
+      select: { movieId: true },
+    }),
+    prisma.note.findMany({
+      where: { userId: MOCK_USER_ID },
+      select: { movieId: true },
+    }),
   ]);
 
-  // 3. Infer favorite genres from high rated movies
-  const genreScores: Record<number, number> = {};
+  // 3. Get trending movies to avoid duplication on Home page
+  const trending = await fetchTMDB("/trending/movie/week", language);
+  const trendingIds = new Set(trending.results.map((m: any) => m.id));
 
-  for (const rating of highRated) {
-    const movie = await fetchTMDB(`/movie/${rating.movieId}`, language);
-    movie.genres.forEach((g: any) => {
-      genreScores[g.id] = (genreScores[g.id] || 0) + 1;
-    });
+  const seenMovieIds = new Set([
+    ...watchlist.map((w) => w.movieId),
+    ...allRatings.map((r) => r.movieId),
+    ...notes.map((n) => n.movieId),
+    ...Array.from(trendingIds), // Also exclude trending
+  ]);
+
+  // 4. Infer favorite genres from high rated movies (limit to top 5 to avoid too many API calls)
+  const genreScores: Record<number, number> = {};
+  const topHighRated = highRated.slice(0, 5);
+
+  for (const rating of topHighRated) {
+    try {
+      const movie = await fetchTMDB(`/movie/${rating.movieId}`, language);
+      movie.genres?.forEach((g: any) => {
+        genreScores[g.id] = (genreScores[g.id] || 0) + 1;
+      });
+    } catch (e) {
+      console.error(`Failed to fetch genres for movie ${rating.movieId}`);
+    }
   }
 
-  // 4. Fetch trending or popular movies to recommend
-  const popular = await fetchTMDB("/movie/popular", language);
-  const recommendations = [];
+  // 5. Fetch more candidates (multiple pages) to ensure we have enough after filtering
+  const [popular1, popular2, topRated1, topRated2] = await Promise.all([
+    fetchTMDB("/movie/popular?page=1", language),
+    fetchTMDB("/movie/popular?page=2", language),
+    fetchTMDB("/movie/top_rated?page=1", language),
+    fetchTMDB("/movie/top_rated?page=2", language),
+  ]);
 
-  for (const movie of popular.results) {
-    if (seenMovieIds.has(movie.id)) continue;
+  const candidates = [
+    ...popular1.results,
+    ...popular2.results,
+    ...topRated1.results,
+    ...topRated2.results,
+  ];
+  const recommendations = [];
+  const addedMovieIds = new Set<number>();
+
+  for (const movie of candidates) {
+    // Filter out: already seen, already added to recs, or NO POSTER
+    if (
+      seenMovieIds.has(movie.id) ||
+      addedMovieIds.has(movie.id) ||
+      !movie.poster_path
+    )
+      continue;
 
     let score = movie.vote_average;
 
     // Boost score based on genre match
-    movie.genre_ids.forEach((gid: number) => {
+    movie.genre_ids?.forEach((gid: number) => {
       if (genreScores[gid]) {
-        score += genreScores[gid] * 0.5;
+        score += genreScores[gid] * 1.5;
       }
     });
 
     recommendations.push({
       userId: MOCK_USER_ID,
       movieId: movie.id,
+      title: movie.title,
+      posterPath: movie.poster_path,
+      voteAverage: movie.vote_average,
       score,
-      reason: "Based on your high-rated genres",
+      reason: genreScores[movie.genre_ids?.[0]]
+        ? "Based on your favorite genres"
+        : "Highly rated and popular",
     });
+    addedMovieIds.add(movie.id);
   }
 
-  // 5. Sort and save top 10
+  // 6. Sort and save top 10
   recommendations.sort((a, b) => b.score - a.score);
   const top10 = recommendations.slice(0, 10);
 
-  // Clear old recommendations and save new ones
-  await prisma.recommendation.deleteMany({ where: { userId: MOCK_USER_ID } });
-  await prisma.recommendation.createMany({ data: top10 });
+  // Clear old recommendations and save new ones in a transaction
+  await prisma.$transaction([
+    prisma.recommendation.deleteMany({ where: { userId: MOCK_USER_ID } }),
+    prisma.recommendation.createMany({ data: top10 }),
+  ]);
 
   return top10;
 }
 
 export async function getRecommendations() {
-  // "use cache";
-  // ⚠️ CACHING STRATEGY: Tag-based revalidation
-  // This cache is invalidated when recommendations are regenerated.
-
-  return prisma.recommendation.findMany({
+  const recs = await prisma.recommendation.findMany({
     where: { userId: MOCK_USER_ID },
     orderBy: { score: "desc" },
     take: 10,
   });
+
+  if (recs.length === 0) {
+    return await generateRecommendations();
+  }
+
+  return recs;
 }
