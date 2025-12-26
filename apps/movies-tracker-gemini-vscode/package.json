@@ -1,0 +1,45 @@
+{
+  "name": "movies-tracker-gemini-vscode",
+  "version": "1.0.0",
+  "description": "A movie tracking application built with Next.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.26.2",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "@prisma/adapter-neon": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.2.3",
+    "lucide-react": "^0.562.0",
+    "next": "16.1.1-canary.5",
+    "next-intl": "^4.6.1",
+    "react": "19.0.0-rc.1",
+    "react-dom": "19.0.0-rc.1",
+    "tailwind-merge": "^3.4.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.1",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "prisma": "^7.2.0",
+    "tailwindcss": "^4.1.18"
+  }
+}

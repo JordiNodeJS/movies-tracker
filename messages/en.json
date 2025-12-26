@@ -1,0 +1,75 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "search": "Search",
+    "watchlist": "Watchlist",
+    "profile": "Profile"
+  },
+  "Home": {
+    "title": "Cinematic",
+    "obsession": "Obsession",
+    "subtitle": "Curated experiences for the modern cinephile.",
+    "trending": "Trending Now",
+    "forYou": "For You",
+    "viewAll": "View All"
+  },
+  "Movie": {
+    "featured": "Featured Premiere",
+    "votes": "Votes",
+    "duration": "Duration",
+    "minutes": "{count} Minutes",
+    "overview": "Overview",
+    "genres": "Genres",
+    "status": "Status",
+    "budget": "Budget",
+    "revenue": "Revenue",
+    "releaseDate": "Release Date",
+    "noPoster": "No Poster",
+    "yourRating": "Your Rating",
+    "personalJournal": "Personal Journal",
+    "journalPlaceholder": "Write your thoughts about this cinematic experience...",
+    "saveJournal": "Save Journal",
+    "deleteNote": "Delete Note",
+    "watchlistAdd": "Watchlist",
+    "watchlistRemove": "In Watchlist",
+    "releaseDate": "Release Date",
+    "noPoster": "No Poster"
+  },
+  "Search": {
+    "title": "Search",
+    "obsession": "Obsession",
+    "placeholder": "Search for movies, directors, or genres...",
+    "noResults": "No movies found"
+  },
+  "Watchlist": {
+    "title": "Watchlist",
+    "subtitle": "Your curated collection of future experiences",
+    "empty": "Your watchlist is empty",
+    "emptySubtitle": "Start exploring to add movies you want to watch"
+  },
+  "Profile": {
+    "title": "Profile",
+    "subtitle": "Movie Enthusiast & Curator",
+    "stats": "Stats",
+    "ratings": "Ratings",
+    "journal": "Journal",
+    "recommendations": "Recommendations",
+    "refreshEngine": "Refresh Engine",
+    "processing": "Processing...",
+    "engineUpdated": "Engine Updated",
+    "engineTitle": "Recommendation Engine",
+    "engineDescription": "Our neural engine analyzes your watchlist and ratings to curate a bespoke selection of cinematic experiences.",
+    "moviesWatched": "Movies Rated",
+    "watchlistCount": "Watchlist Items",
+    "averageRating": "Average Rating",
+    "recentJournalEntries": "Recent Journal Entries",
+    "viewAll": "View All",
+    "topRatings": "Top Ratings",
+    "noJournal": "No journal entries yet",
+    "noRatings": "No ratings yet"
+  },
+  "Common": {
+    "noPoster": "No Poster",
+    "movie": "Movie"
+  }
+}

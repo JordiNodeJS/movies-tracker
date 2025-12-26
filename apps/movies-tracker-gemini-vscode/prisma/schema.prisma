@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  name          String?
+  watchlist     WatchlistItem[]
+  ratings       Rating[]
+  notes         Note[]
+  preferences   UserPreference?
+  viewHistory   ViewHistory[]
+  recommendations Recommendation[]
+
+  @@map("users")
+}
+
+model WatchlistItem {
+  id         String   @id @default(cuid())
+  userId     String
+  movieId    Int
+  title      String
+  posterPath String?
+  voteAverage Float?   @default(0)
+  addedAt    DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("watchlist_items")
+}
+
+model Rating {
+  id          String   @id @default(cuid())
+  userId      String
+  movieId     Int
+  title       String?
+  posterPath  String?
+  voteAverage Float?   @default(0)
+  value       Int // 1-10
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("ratings")
+}
+
+model Note {
+  id          String   @id @default(cuid())
+  userId      String
+  movieId     Int
+  title       String?
+  posterPath  String?
+  voteAverage Float?   @default(0)
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("notes")
+}
+
+model UserPreference {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  favoriteGenres Int[]    // Array of genre IDs
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
+
+model ViewHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  movieId   Int
+  viewedAt  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("view_history")
+}
+
+model Recommendation {
+  id        String   @id @default(cuid())
+  userId    String
+  movieId   Int
+  score     Float
+  reason    String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("recommendations")
+}
+
+model GenreCache {
+  id    Int    @id
+  name  String
+
+  @@map("genre_cache")
+}

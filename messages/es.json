@@ -1,0 +1,75 @@
+{
+  "Navbar": {
+    "home": "Inicio",
+    "search": "Buscar",
+    "watchlist": "Lista",
+    "profile": "Perfil"
+  },
+  "Home": {
+    "title": "Obsesión",
+    "obsession": "Cinematográfica",
+    "subtitle": "Experiencias seleccionadas para el cinéfilo moderno.",
+    "trending": "Tendencias",
+    "forYou": "Para Ti",
+    "viewAll": "Ver Todo"
+  },
+  "Movie": {
+    "featured": "Estreno Destacado",
+    "votes": "Votos",
+    "duration": "Duración",
+    "minutes": "{count} Minutos",
+    "overview": "Sinopsis",
+    "genres": "Géneros",
+    "status": "Estado",
+    "budget": "Presupuesto",
+    "revenue": "Recaudación",
+    "releaseDate": "Fecha de Estreno",
+    "noPoster": "Sin Póster",
+    "yourRating": "Tu Calificación",
+    "personalJournal": "Diario Personal",
+    "journalPlaceholder": "Escribe tus pensamientos sobre esta experiencia cinematográfica...",
+    "saveJournal": "Guardar Diario",
+    "deleteNote": "Eliminar Nota",
+    "watchlistAdd": "Lista de Seguimiento",
+    "watchlistRemove": "En la Lista",
+    "releaseDate": "Fecha de Estreno",
+    "noPoster": "Sin Póster"
+  },
+  "Search": {
+    "title": "Buscar",
+    "obsession": "Obsesión",
+    "placeholder": "Busca películas, directores o géneros...",
+    "noResults": "No se encontraron películas"
+  },
+  "Watchlist": {
+    "title": "Lista",
+    "subtitle": "Tu colección seleccionada de futuras experiencias",
+    "empty": "Tu lista está vacía",
+    "emptySubtitle": "Empieza a explorar para añadir películas que quieras ver"
+  },
+  "Profile": {
+    "title": "Perfil",
+    "subtitle": "Entusiasta y Curador de Cine",
+    "stats": "Estadísticas",
+    "ratings": "Calificaciones",
+    "journal": "Diario",
+    "recommendations": "Recomendaciones",
+    "refreshEngine": "Actualizar Motor",
+    "processing": "Procesando...",
+    "engineUpdated": "Motor Actualizado",
+    "engineTitle": "Motor de Recomendación",
+    "engineDescription": "Nuestro motor neuronal analiza tu lista y calificaciones para curar una selección a medida de experiencias cinematográficas.",
+    "moviesWatched": "Películas Calificadas",
+    "watchlistCount": "Elementos en Lista",
+    "averageRating": "Calificación Media",
+    "recentJournalEntries": "Entradas Recientes del Diario",
+    "viewAll": "Ver Todo",
+    "topRatings": "Mejores Calificaciones",
+    "noJournal": "Aún no hay entradas en el diario",
+    "noRatings": "Aún no hay calificaciones"
+  },
+  "Common": {
+    "noPoster": "Sin Póster",
+    "movie": "Película"
+  }
+}

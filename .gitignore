@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+.pnpm-debug.log*
+
+# Security
+.env
+.env.*
+!.env.example
+
+# Next.js build outputs
+.next/
+out/
+build/
+.github
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+.vercel
+.env*.local
