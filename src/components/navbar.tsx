@@ -2,12 +2,13 @@ import { Link } from "@/i18n/routing";
 import { Film, Search, Bookmark, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./language-switcher";
+import { ThemeToggle } from "./theme-toggle";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/40 backdrop-blur-2xl">
+    <nav className="sticky top-0 z-50 w-full border-b border-foreground/5 bg-background/40 backdrop-blur-2xl">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
@@ -39,13 +40,17 @@ export function Navbar() {
             icon={<User className="w-4 h-4" />}
             label={t("profile")}
           />
-          <LanguageSwitcher />
+          <div className="flex items-center gap-2 border-l border-foreground/10 pl-6">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* Mobile Menu Button (Simplified for now) */}
         <div className="md:hidden flex items-center gap-4">
           <LanguageSwitcher />
-          <Search className="w-6 h-6 text-white/60" />
+          <ThemeToggle />
+          <Search className="w-6 h-6 opacity-60" />
         </div>
       </div>
     </nav>
@@ -64,7 +69,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="text-sm font-bold uppercase tracking-widest text-white/50 hover:text-white transition-all flex items-center gap-2 group"
+      className="text-sm font-bold uppercase tracking-widest opacity-50 hover:opacity-100 transition-all flex items-center gap-2 group"
     >
       <span className="group-hover:scale-110 transition-transform">{icon}</span>
       <span>{label}</span>

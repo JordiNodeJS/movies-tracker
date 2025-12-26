@@ -122,6 +122,107 @@ const MOCK_MOVIES: Movie[] = [
     revenue: 828058927,
     genre_ids: [28, 12],
   },
+  {
+    id: 6,
+    title: "Oppenheimer",
+    poster_path: "/8Gxv2mEhG19m2JsCdPmI6HZwS1m.jpg",
+    backdrop_path: "/fm610VOFv9R179D7rq69vI3p29I.jpg",
+    vote_average: 8.1,
+    release_date: "2023-07-19",
+    overview:
+      "The story of J. Robert Oppenheimer's role in the development of the atomic bomb.",
+    genres: [
+      { id: 18, name: "Drama" },
+      { id: 36, name: "History" },
+    ],
+    runtime: 180,
+    status: "Released",
+    budget: 100000000,
+    revenue: 960000000,
+    genre_ids: [18, 36],
+  },
+  {
+    id: 7,
+    title: "Barbie",
+    poster_path: "/iuFNMSv95O9vSUEs3zrjHm0xYpB.jpg",
+    backdrop_path: "/ctM8G2o4oZ0vMWq9zcyuRLoqSIa.jpg",
+    vote_average: 7.2,
+    release_date: "2023-07-19",
+    overview:
+      "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land.",
+    genres: [
+      { id: 35, name: "Comedy" },
+      { id: 12, name: "Adventure" },
+      { id: 14, name: "Fantasy" },
+    ],
+    runtime: 114,
+    status: "Released",
+    budget: 145000000,
+    revenue: 1445638421,
+    genre_ids: [35, 12, 14],
+  },
+  {
+    id: 8,
+    title: "The Super Mario Bros. Movie",
+    poster_path: "/qNBAXBIQlnOzb6Uhw68Bqef7SUI.jpg",
+    backdrop_path: "/9n2tI3uW7vMvz70QYMvH1uLpSg8.jpg",
+    vote_average: 7.8,
+    release_date: "2023-04-05",
+    overview:
+      "While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world.",
+    genres: [
+      { id: 16, name: "Animation" },
+      { id: 10751, name: "Family" },
+      { id: 12, name: "Adventure" },
+      { id: 14, name: "Fantasy" },
+      { id: 35, name: "Comedy" },
+    ],
+    runtime: 92,
+    status: "Released",
+    budget: 100000000,
+    revenue: 1361975039,
+    genre_ids: [16, 10751, 12, 14, 35],
+  },
+  {
+    id: 9,
+    title: "Guardians of the Galaxy Vol. 3",
+    poster_path: "/r2J02Z2OpNT4NNm1pYybYnL3Obr.jpg",
+    backdrop_path: "/5YZbUmjbMa39vS9z9Pk39Uv365L.jpg",
+    vote_average: 8.0,
+    release_date: "2023-05-03",
+    overview:
+      "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own.",
+    genres: [
+      { id: 878, name: "Science Fiction" },
+      { id: 12, name: "Adventure" },
+      { id: 28, name: "Action" },
+    ],
+    runtime: 150,
+    status: "Released",
+    budget: 250000000,
+    revenue: 845555777,
+    genre_ids: [878, 12, 28],
+  },
+  {
+    id: 10,
+    title: "John Wick: Chapter 4",
+    poster_path: "/vZloYm7pZ7QrETv3tvySBUpxQSJ.jpg",
+    backdrop_path: "/h8gH9u7vF9jS0eUqPT8fsWp8Z1I.jpg",
+    vote_average: 7.8,
+    release_date: "2023-03-22",
+    overview:
+      "With the price on his head ever increasing, John Wick uncovers a path to defeating The High Table.",
+    genres: [
+      { id: 28, name: "Action" },
+      { id: 53, name: "Thriller" },
+      { id: 80, name: "Crime" },
+    ],
+    runtime: 169,
+    status: "Released",
+    budget: 100000000,
+    revenue: 440146694,
+    genre_ids: [28, 53, 80],
+  },
 ];
 
 // Mock API responses
@@ -134,14 +235,14 @@ const MOCK_TRENDING = {
 
 const MOCK_POPULAR = {
   page: 1,
-  results: MOCK_MOVIES.slice(2, 7),
+  results: MOCK_MOVIES.slice(5, 10),
   total_pages: 1,
   total_results: 5,
 };
 
 const MOCK_TOP_RATED = {
   page: 1,
-  results: MOCK_MOVIES.slice(4, 9),
+  results: MOCK_MOVIES.slice(3, 8),
   total_pages: 1,
   total_results: 5,
 };
@@ -239,11 +340,18 @@ export async function fetchTMDB(
   return response.json();
 }
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export async function getTrendingMovies(language: string = "en") {
+  "use cache";
+  cacheLife("trending");
+  cacheTag("trending");
   return fetchTMDB("/trending/movie/day", language);
 }
 
 export async function searchMovies(query: string, language: string = "en") {
+  "use cache";
+  cacheLife("search");
   return fetchTMDB(
     `/search/movie?query=${encodeURIComponent(query)}`,
     language
@@ -254,6 +362,9 @@ export async function getMovieDetails(
   movieId: number,
   language: string = "en"
 ) {
+  "use cache";
+  cacheLife("movie");
+  cacheTag(`movie-${movieId}`);
   return fetchTMDB(
     `/movie/${movieId}?append_to_response=videos,credits,recommendations`,
     language
@@ -261,5 +372,7 @@ export async function getMovieDetails(
 }
 
 export async function getGenres(language: string = "en") {
+  "use cache";
+  cacheLife("genres");
   return fetchTMDB("/genre/movie/list", language);
 }

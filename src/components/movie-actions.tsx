@@ -87,7 +87,7 @@ export function MovieActions({
             "flex items-center justify-center gap-4 py-6 rounded-[2rem] font-black uppercase tracking-[0.2em] text-[10px] transition-all duration-500 group",
             data.isInWatchlist
               ? "bg-indigo-600 text-white shadow-[0_20px_50px_rgba(79,70,229,0.3)] border-transparent"
-              : "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/10"
+              : "bg-foreground/5 opacity-40 hover:opacity-100 hover:bg-foreground/10 border border-foreground/10"
           )}
         >
           <Bookmark
@@ -105,16 +105,16 @@ export function MovieActions({
             "w-20 h-20 rounded-[2rem] flex items-center justify-center transition-all duration-500 group",
             data.note
               ? "bg-indigo-500/10 text-indigo-500 border border-indigo-500/20"
-              : "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/10"
+              : "bg-foreground/5 opacity-40 hover:opacity-100 hover:bg-foreground/10 border border-foreground/10"
           )}
         >
           <MessageSquare className="w-5 h-5 group-hover:rotate-12 transition-transform" />
         </button>
       </div>
 
-      <div className="p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 space-y-6">
+      <div className="p-8 rounded-[2.5rem] bg-foreground/[0.02] border border-foreground/5 space-y-6">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">
+          <span className="text-[10px] font-black opacity-20 uppercase tracking-[0.3em]">
             {t("yourRating")}
           </span>
           <span className="text-2xl font-black text-indigo-500">
@@ -130,7 +130,7 @@ export function MovieActions({
                 "w-full aspect-square rounded-lg text-[10px] font-black transition-all",
                 data.rating >= val
                   ? "bg-indigo-600 text-white"
-                  : "bg-white/5 text-white/20 hover:bg-white/10 hover:text-white/40"
+                  : "bg-foreground/5 opacity-20 hover:opacity-40 hover:bg-foreground/10"
               )}
             >
               {val}
@@ -142,23 +142,23 @@ export function MovieActions({
       {isNoteOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
           <div
-            className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+            className="absolute inset-0 bg-background/90 backdrop-blur-xl"
             onClick={() => setIsNoteOpen(false)}
           />
-          <div className="relative w-full max-w-2xl bg-[#0a0a0a] border border-white/10 rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+          <div className="relative w-full max-w-2xl bg-background border border-foreground/10 rounded-[3rem] overflow-hidden shadow-2xl">
             <div className="p-10 space-y-8">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <h3 className="text-3xl font-black tracking-tighter uppercase italic">
                     {t("personalJournal")}
                   </h3>
-                  <p className="text-[10px] font-black text-white/20 uppercase tracking-widest">
+                  <p className="text-[10px] font-black opacity-20 uppercase tracking-widest">
                     {title}
                   </p>
                 </div>
                 <button
                   onClick={() => setIsNoteOpen(false)}
-                  className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+                  className="w-12 h-12 rounded-full bg-foreground/5 flex items-center justify-center hover:bg-foreground/10 transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -168,7 +168,7 @@ export function MovieActions({
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
                 placeholder={t("journalPlaceholder")}
-                className="w-full h-64 bg-white/5 border border-white/10 rounded-3xl p-8 text-xl font-medium focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:text-white/5"
+                className="w-full h-64 bg-foreground/5 border border-foreground/10 rounded-3xl p-8 text-xl font-medium focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:opacity-5"
               />
 
               <div className="flex items-center justify-between gap-4">
@@ -185,7 +185,7 @@ export function MovieActions({
                 <button
                   onClick={handleSaveNote}
                   disabled={isSaving}
-                  className="h-16 px-10 rounded-full bg-white text-black font-black uppercase tracking-widest text-[10px] flex items-center gap-3 hover:scale-105 transition-transform disabled:opacity-50"
+                  className="h-16 px-10 rounded-full bg-foreground text-background font-black uppercase tracking-widest text-[10px] flex items-center gap-3 hover:scale-105 transition-transform disabled:opacity-50"
                 >
                   {isSaving ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
