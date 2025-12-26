@@ -5,7 +5,8 @@
 // Revalidates every 15 minutes by default in Next.js 16.
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
-const TMDB_ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN;
+const TMDB_ACCESS_TOKEN =
+  process.env.TMDB_ACCESS_TOKEN || process.env.TMDB_READ_ACCESS_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 export interface Movie {
@@ -126,9 +127,23 @@ const MOCK_MOVIES: Movie[] = [
 // Mock API responses
 const MOCK_TRENDING = {
   page: 1,
-  results: MOCK_MOVIES.slice(0, 10),
-  total_pages: 10,
-  total_results: 100,
+  results: MOCK_MOVIES.slice(0, 5),
+  total_pages: 1,
+  total_results: 5,
+};
+
+const MOCK_POPULAR = {
+  page: 1,
+  results: MOCK_MOVIES.slice(2, 7),
+  total_pages: 1,
+  total_results: 5,
+};
+
+const MOCK_TOP_RATED = {
+  page: 1,
+  results: MOCK_MOVIES.slice(4, 9),
+  total_pages: 1,
+  total_results: 5,
 };
 
 const MOCK_SEARCH = {
@@ -185,8 +200,12 @@ export async function fetchTMDB(
   if (!hasValidCredentials) {
     await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate network delay
 
-    if (endpoint.includes("/trending/movie/day")) {
+    if (endpoint.includes("/trending/movie/")) {
       return MOCK_TRENDING;
+    } else if (endpoint.includes("/movie/popular")) {
+      return MOCK_POPULAR;
+    } else if (endpoint.includes("/movie/top_rated")) {
+      return MOCK_TOP_RATED;
     } else if (endpoint.includes("/search/movie")) {
       return MOCK_SEARCH;
     } else if (
