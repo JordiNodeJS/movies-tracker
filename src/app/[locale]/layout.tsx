@@ -7,6 +7,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Suspense } from "react";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,16 +50,23 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="dark">
+    <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050505] text-white min-h-screen selection:bg-indigo-500 selection:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
-        <NextIntlClientProvider messages={messages}>
-          <Suspense fallback={<div className="h-20 bg-black/40" />}>
-            <Navbar />
-          </Suspense>
-          <main>{children}</main>
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <Suspense fallback={<div className="h-20 bg-black/40" />}>
+              <Navbar />
+            </Suspense>
+            <main>{children}</main>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

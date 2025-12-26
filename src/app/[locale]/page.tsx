@@ -66,8 +66,8 @@ async function HeroSection({ locale }: { locale: string }) {
         ) : (
           <div className="absolute inset-0 bg-indigo-500/10" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
       </div>
 
       {/* Content */}
@@ -84,14 +84,14 @@ async function HeroSection({ locale }: { locale: string }) {
             {featured.title}
           </h1>
 
-          <p className="text-xl text-white/50 max-w-xl leading-relaxed font-medium text-balance">
+          <p className="text-xl opacity-50 max-w-xl leading-relaxed font-medium text-balance">
             {featured.overview}
           </p>
 
           <div className="flex flex-wrap items-center gap-6 pt-6">
             <Link
               href={`/movie/${featured.id}`}
-              className="h-16 px-10 bg-white text-black rounded-full flex items-center gap-4 font-black uppercase tracking-tighter hover:scale-105 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+              className="h-16 px-10 bg-foreground text-background rounded-full flex items-center gap-4 font-black uppercase tracking-tighter hover:scale-105 transition-transform shadow-foreground/10 shadow-xl"
             >
               <Play className="w-6 h-6 fill-current" />
               {t("watchlistAdd")}
@@ -172,9 +172,8 @@ async function RecommendationsSection({ locale }: { locale: string }) {
           </div>
           <div className="h-2 w-24 bg-indigo-600" />
           {!isPersonalized && (
-            <p className="text-white/40 font-medium uppercase tracking-[0.2em] text-[10px] max-w-md leading-relaxed">
-              Puntúa películas para que nuestro algoritmo aprenda tus gustos y
-              te ofrezca recomendaciones personalizadas.
+            <p className="text-white/40 font-medium uppercase tracking-[0.2em] text-[10px] max-w-md leading-relaxed text-balance">
+              {t("discoverSubtitle")}
             </p>
           )}
         </div>

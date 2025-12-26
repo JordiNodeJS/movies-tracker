@@ -12,7 +12,22 @@
     "trending": "Trending Now",
     "forYou": "For You",
     "discover": "Discover",
+    "discoverSubtitle": "Rate movies so our algorithm can learn your tastes and offer you personalized recommendations.",
     "viewAll": "View All"
+  },
+  "Algorithm": {
+    "howItWorks": "How it works?",
+    "title": "Algorithm",
+    "ia": "AI",
+    "step1Title": "Preference Analysis",
+    "step1Desc": "We analyze your movies rated 8 or higher to understand your tastes.",
+    "step2Title": "Genre Identification",
+    "step2Desc": "We detect the genres you are most passionate about based on your history.",
+    "step3Title": "Smart Filtering",
+    "step3Desc": "We remove what you've already seen or have on your list so you always discover something new.",
+    "step4Title": "Personalized Scoring",
+    "step4Desc": "We cross-reference global trends with your tastes to give you a unique selection.",
+    "footer": "Our recommendation engine updates every time you rate a movie."
   },
   "Movie": {
     "featured": "Featured Premiere",

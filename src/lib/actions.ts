@@ -1,12 +1,12 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { connection } from "next/server";
 import { getMovieDetails } from "@/lib/tmdb";
 
 // Mock user ID for now - in a real app, this would come from auth
-const MOCK_USER_ID = "user_123";
+const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
 
 export async function ensureUser() {
   await connection();
@@ -54,6 +54,8 @@ export async function toggleWatchlist(
 
   revalidatePath(`/movie/${movieId}`);
   revalidatePath("/watchlist");
+  revalidateTag("recommendations");
+  revalidateTag(`movie-${movieId}`);
 }
 
 export async function saveNote(
@@ -82,6 +84,8 @@ export async function saveNote(
   });
 
   revalidatePath(`/movie/${movieId}`);
+  revalidateTag("recommendations");
+  revalidateTag(`movie-${movieId}`);
 }
 
 export async function saveRating(
@@ -110,6 +114,8 @@ export async function saveRating(
   });
 
   revalidatePath(`/movie/${movieId}`);
+  revalidateTag("recommendations");
+  revalidateTag(`movie-${movieId}`);
 }
 
 export async function deleteNote(movieId: number) {
@@ -125,6 +131,8 @@ export async function deleteNote(movieId: number) {
   });
 
   revalidatePath(`/movie/${movieId}`);
+  revalidateTag("recommendations");
+  revalidateTag(`movie-${movieId}`);
 }
 
 export async function deleteRating(movieId: number) {
@@ -140,6 +148,8 @@ export async function deleteRating(movieId: number) {
   });
 
   revalidatePath(`/movie/${movieId}`);
+  revalidateTag("recommendations");
+  revalidateTag(`movie-${movieId}`);
 }
 
 export async function getMovieUserData(movieId: number) {

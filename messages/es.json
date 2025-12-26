@@ -12,7 +12,22 @@
     "trending": "Tendencias",
     "forYou": "Para Ti",
     "discover": "Descubrir",
+    "discoverSubtitle": "Puntúa películas para que nuestro algoritmo aprenda tus gustos y te ofrezca recomendaciones personalizadas.",
     "viewAll": "Ver Todo"
+  },
+  "Algorithm": {
+    "howItWorks": "¿Cómo funciona?",
+    "title": "Algoritmo",
+    "ia": "IA",
+    "step1Title": "Análisis de Preferencias",
+    "step1Desc": "Analizamos tus películas puntuadas con 8 o más para entender tus gustos.",
+    "step2Title": "Identificación de Géneros",
+    "step2Desc": "Detectamos los géneros que más te apasionan basándonos en tu historial.",
+    "step3Title": "Filtrado Inteligente",
+    "step3Desc": "Eliminamos lo que ya has visto o tienes en tu lista para que siempre descubras algo nuevo.",
+    "step4Title": "Puntuación Personalizada",
+    "step4Desc": "Cruzamos tendencias globales con tus gustos para darte una selección única.",
+    "footer": "Nuestro motor de recomendación se actualiza cada vez que puntúas una película."
   },
   "Movie": {
     "featured": "Estreno Destacado",

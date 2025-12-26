@@ -21,7 +21,7 @@ export function MovieCard({
   return (
     <Link
       href={`/movie/${movie.id}`}
-      className="group relative block aspect-[2/3] overflow-hidden rounded-2xl bg-white/5 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_20px_50px_rgba(99,102,241,0.2)]"
+      className="group relative block aspect-[2/3] overflow-hidden rounded-2xl bg-foreground/5 transition-all duration-500 hover:scale-[1.03] hover:shadow-accent/20 hover:shadow-2xl"
     >
       {movie.poster_path ? (
         <Image
@@ -32,19 +32,17 @@ export function MovieCard({
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
         />
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center bg-white/5 text-white/20 p-4 text-center">
+        <div className="w-full h-full flex flex-col items-center justify-center bg-foreground/5 opacity-20 p-4 text-center">
           <span className="text-xs font-black uppercase tracking-[0.2em] mb-2">
             {t("noPoster")}
           </span>
-          <span className="text-[10px] font-medium opacity-50">
-            {movie.title}
-          </span>
+          <span className="text-[10px] font-medium">{movie.title}</span>
         </div>
       )}
 
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
         <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-          <h3 className="font-black text-lg leading-tight mb-2 tracking-tighter uppercase">
+          <h3 className="font-black text-lg leading-tight mb-2 tracking-tighter uppercase text-white">
             {movie.title}
           </h3>
           <div className="flex items-center gap-2">

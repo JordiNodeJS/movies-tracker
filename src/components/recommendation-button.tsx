@@ -28,9 +28,13 @@ export function RecommendationButton() {
     <button
       onClick={handleRefresh}
       disabled={isGenerating}
-      className="px-4 py-2 bg-white text-black text-xs font-bold uppercase tracking-widest hover:bg-gray-200 transition-colors disabled:opacity-50"
+      className="px-4 py-2 bg-foreground text-background text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all disabled:opacity-50"
     >
-      {isGenerating ? t("processing") : isDone ? t("engineUpdated") : t("refreshEngine")}
+      {isGenerating
+        ? t("processing")
+        : isDone
+          ? t("engineUpdated")
+          : t("refreshEngine")}
     </button>
   );
 }

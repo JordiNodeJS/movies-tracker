@@ -34,13 +34,13 @@ export default function SearchPage() {
           {t("title")} <span className="text-indigo-500">{t("obsession")}</span>
         </h1>
         <div className="relative group">
-          <SearchIcon className="absolute left-8 top-1/2 -translate-y-1/2 text-white/20 w-8 h-8 group-focus-within:text-indigo-500 transition-colors" />
+          <SearchIcon className="absolute left-8 top-1/2 -translate-y-1/2 opacity-20 w-8 h-8 group-focus-within:text-indigo-500 group-focus-within:opacity-100 transition-all" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("placeholder")}
-            className="w-full bg-white/5 border border-white/10 rounded-[2rem] py-8 pl-20 pr-10 text-2xl font-bold focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-all shadow-[0_0_50px_rgba(0,0,0,0.5)] placeholder:text-white/10"
+            className="w-full bg-foreground/5 border border-foreground/10 rounded-[2rem] py-8 pl-20 pr-10 text-2xl font-bold focus:outline-none focus:border-indigo-500/50 focus:bg-foreground/[0.07] transition-all shadow-2xl placeholder:opacity-10"
           />
           {isLoading && (
             <Loader2 className="absolute right-8 top-1/2 -translate-y-1/2 text-indigo-500 w-8 h-8 animate-spin" />
@@ -58,10 +58,10 @@ export default function SearchPage() {
 
       {debouncedQuery && results.length === 0 && !isLoading && (
         <div className="h-[40vh] flex flex-col items-center justify-center space-y-4">
-          <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center">
-            <SearchIcon className="w-8 h-8 text-white/20" />
+          <div className="w-20 h-20 rounded-full bg-foreground/5 flex items-center justify-center">
+            <SearchIcon className="w-8 h-8 opacity-20" />
           </div>
-          <p className="text-white/40 font-black uppercase tracking-widest text-sm">
+          <p className="opacity-40 font-black uppercase tracking-widest text-sm">
             {t("noResults")}
           </p>
         </div>

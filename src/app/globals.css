@@ -4,8 +4,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-background: #050505;
-  --color-foreground: #ffffff;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 
   --color-accent: #6366f1;
   --color-accent-foreground: #ffffff;
@@ -30,14 +30,19 @@
 
 @layer base {
   :root {
-    --background: 5 5 5;
-    --foreground: 255 255 255;
+    --background: #ffffff;
+    --foreground: #050505;
     --accent: 99 102 241;
   }
 
+  .dark {
+    --background: #050505;
+    --foreground: #ffffff;
+  }
+
   body {
-    background-color: #050505;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
     selection-background-color: #6366f1;
     selection-color: #ffffff;
   }
@@ -45,9 +50,9 @@
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.03);
+    background: color-mix(in srgb, var(--foreground) 3%, transparent);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
   }
 
   .glass-hover {
@@ -55,12 +60,16 @@
   }
 
   .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: color-mix(in srgb, var(--foreground) 6%, transparent);
+    border-color: color-mix(in srgb, var(--foreground) 15%, transparent);
   }
 
   .text-gradient {
-    background: linear-gradient(to bottom right, #ffffff, #a5a5a5);
+    background: linear-gradient(
+      to bottom right,
+      var(--foreground),
+      color-mix(in srgb, var(--foreground) 60%, transparent)
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

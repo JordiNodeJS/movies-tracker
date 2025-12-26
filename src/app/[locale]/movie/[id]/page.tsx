@@ -34,7 +34,7 @@ async function MovieContent({
   const t = await getTranslations("Movie");
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden">
       {/* Backdrop Layer */}
       <div className="fixed inset-0 -z-10 h-screen w-full">
         {movie.backdrop_path ? (
@@ -48,8 +48,8 @@ async function MovieContent({
         ) : (
           <div className="absolute inset-0 bg-zinc-900" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505]/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background/60" />
       </div>
 
       {/* Decorative Background Title - Avant-Garde touch */}
@@ -84,7 +84,7 @@ async function MovieContent({
               </div>
 
               {/* Floating Badge for Rating */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-indigo-600 flex flex-col items-center justify-center shadow-2xl border-4 border-[#050505] z-20 rotate-12 group-hover:rotate-0 transition-transform duration-500">
+              <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-indigo-600 flex flex-col items-center justify-center shadow-2xl border-4 border-background z-20 rotate-12 group-hover:rotate-0 transition-transform duration-500 text-white">
                 <span className="text-2xl font-black leading-none">
                   {movie.vote_average.toFixed(1)}
                 </span>

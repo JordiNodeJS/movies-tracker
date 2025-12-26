@@ -1,22 +1,15 @@
 import "dotenv/config";
 import { prisma } from "./src/lib/prisma";
 
-async function main() {
-  const user = await prisma.user.upsert({
-    where: { email: "jordi.nodejs@gmail.com" },
-    update: {},
-    create: {
-      id: "user_123",
-      email: "jordi.nodejs@gmail.com",
-      name: "Jordi",
-    },
-  });
-  console.log("User:", user);
+import { generateRecommendations } from "./src/lib/recommendations";
 
-  const data = await prisma.watchlistItem.findMany({
-    where: { userId: "user_123" },
-  });
-  console.log("Watchlist:", data);
+async function main() {
+  console.log("Generating recommendations...");
+  const recs = await generateRecommendations("es");
+  console.log("Generated recommendations:", recs.length);
+  if (recs.length > 0) {
+    console.log("First rec:", recs[0]);
+  }
 }
 
 main()

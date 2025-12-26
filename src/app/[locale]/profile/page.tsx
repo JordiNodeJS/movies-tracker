@@ -32,7 +32,7 @@ async function ProfileContent() {
       <header className="flex items-center gap-10">
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative w-32 h-32 rounded-full bg-black border border-white/10 flex items-center justify-center text-5xl font-black tracking-tighter">
+          <div className="relative w-32 h-32 rounded-full bg-background border border-foreground/10 flex items-center justify-center text-5xl font-black tracking-tighter">
             J
           </div>
         </div>
@@ -42,14 +42,14 @@ async function ProfileContent() {
           </h1>
           <div className="flex items-center gap-4">
             <div className="h-[1px] w-12 bg-indigo-500" />
-            <p className="text-white/40 font-black uppercase tracking-[0.3em] text-[10px]">
+            <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>
           </div>
         </div>
       </header>
 
-      <section className="relative overflow-hidden bg-white/[0.02] border border-white/5 rounded-[3rem] p-12 space-y-10">
+      <section className="relative overflow-hidden bg-foreground/[0.02] border border-foreground/5 rounded-[3rem] p-12 space-y-10">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-indigo-500/10 blur-[120px] rounded-full" />
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -57,7 +57,7 @@ async function ProfileContent() {
             <h2 className="text-4xl font-black tracking-tighter uppercase">
               {t("engineTitle")}
             </h2>
-            <p className="text-white/40 font-medium text-lg max-w-xl">
+            <p className="opacity-40 font-medium text-lg max-w-xl">
               {t("engineDescription")}
             </p>
           </div>
@@ -65,7 +65,7 @@ async function ProfileContent() {
           <RecommendationButton />
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 pt-10 border-t border-white/5">
+        <div className="grid md:grid-cols-3 gap-6 pt-10 border-t border-foreground/5">
           <StatCard
             label={t("moviesWatched")}
             value={data.stats.watched.toString()}
@@ -86,7 +86,7 @@ async function ProfileContent() {
             </h2>
             <Link
               href="/watchlist"
-              className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 hover:text-white transition-colors"
+              className="text-[10px] font-black uppercase tracking-[0.2em] opacity-20 hover:opacity-100 transition-all"
             >
               {t("viewAll")}
             </Link>
@@ -97,12 +97,12 @@ async function ProfileContent() {
               {data.notes.map((note) => (
                 <div
                   key={note.id}
-                  className="group relative p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all"
+                  className="group relative p-10 rounded-[2.5rem] bg-foreground/[0.02] border border-foreground/5 hover:bg-foreground/[0.04] transition-all"
                 >
-                  <Quote className="absolute top-6 right-10 w-12 h-12 text-white/[0.03] group-hover:text-indigo-500/10 transition-colors" />
+                  <Quote className="absolute top-6 right-10 w-12 h-12 opacity-[0.03] group-hover:text-indigo-500/10 transition-colors" />
                   <div className="flex gap-8">
                     {note.posterPath && (
-                      <div className="relative w-24 aspect-[2/3] rounded-xl overflow-hidden border border-white/10 shrink-0">
+                      <div className="relative w-24 aspect-[2/3] rounded-xl overflow-hidden border border-foreground/10 shrink-0">
                         <Image
                           src={`https://image.tmdb.org/t/p/w200${note.posterPath}`}
                           alt={note.title || ""}
@@ -115,7 +115,7 @@ async function ProfileContent() {
                       <h3 className="text-xl font-black uppercase tracking-tight">
                         {note.title}
                       </h3>
-                      <p className="text-white/60 leading-relaxed italic">
+                      <p className="opacity-60 leading-relaxed italic">
                         "{note.content}"
                       </p>
                     </div>
@@ -124,7 +124,7 @@ async function ProfileContent() {
               ))}
             </div>
           ) : (
-            <div className="h-64 rounded-[2.5rem] border border-dashed border-white/10 flex flex-col items-center justify-center gap-4 text-white/20">
+            <div className="h-64 rounded-[2.5rem] border border-dashed border-foreground/10 flex flex-col items-center justify-center gap-4 opacity-20">
               <MessageSquare className="w-8 h-8" />
               <p className="text-xs font-black uppercase tracking-widest">
                 {t("noJournal")}
@@ -142,7 +142,7 @@ async function ProfileContent() {
               <Link
                 key={rec.id}
                 href={`/movie/${rec.movieId}`}
-                className="group block p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-all"
+                className="group block p-6 rounded-3xl bg-foreground/[0.02] border border-foreground/5 hover:border-indigo-500/30 transition-all"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 font-black">
@@ -152,7 +152,7 @@ async function ProfileContent() {
                     <h4 className="font-black uppercase tracking-tight group-hover:text-indigo-400 transition-colors">
                       {rec.title}
                     </h4>
-                    <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">
+                    <p className="text-[10px] opacity-40 uppercase tracking-widest font-bold">
                       {rec.reason}
                     </p>
                   </div>
@@ -168,8 +168,8 @@ async function ProfileContent() {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="p-8 rounded-[2rem] bg-black/20 border border-white/5 space-y-1">
-      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">
+    <div className="p-8 rounded-[2rem] bg-foreground/[0.02] border border-foreground/5 space-y-1">
+      <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-20">
         {label}
       </p>
       <p className="text-4xl font-black tracking-tighter">{value}</p>

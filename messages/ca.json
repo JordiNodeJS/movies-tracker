@@ -12,7 +12,22 @@
     "trending": "Tendències",
     "forYou": "Per a Tu",
     "discover": "Descobrir",
+    "discoverSubtitle": "Puntua pel·lícules perquè el nostre algoritme aprengui els teus gustos i t'ofereixi recomanacions personalitzades.",
     "viewAll": "Veure Tot"
+  },
+  "Algorithm": {
+    "howItWorks": "Com funciona?",
+    "title": "Algoritme",
+    "ia": "IA",
+    "step1Title": "Anàlisi de Preferències",
+    "step1Desc": "Analitzem les teves pel·lícules puntuades amb 8 o més per entendre els teus gustos.",
+    "step2Title": "Identificació de Gèneres",
+    "step2Desc": "Detectem els gèneres que més t'apassionen basant-nos en el teu historial.",
+    "step3Title": "Filtratge Intel·ligent",
+    "step3Desc": "Eliminem el que ja has vist o tens a la teva llista perquè sempre descobreixis alguna cosa nova.",
+    "step4Title": "Puntuació Personalitzada",
+    "step4Desc": "Creuem tendències globals amb els teus gustos per donar-te una selecció única.",
+    "footer": "El nostre motor de recomanació s'actualitza cada vegada que puntues una pel·lícula."
   },
   "Movie": {
     "featured": "Estrena Destacada",

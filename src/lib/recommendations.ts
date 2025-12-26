@@ -2,10 +2,13 @@
 
 import { prisma } from "@/lib/prisma";
 import { fetchTMDB } from "@/lib/tmdb";
+import { cacheLife, cacheTag } from "next/cache";
 
-const MOCK_USER_ID = "user_123";
+const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
 
 export async function generateRecommendations(language: string = "en") {
+  "use cache";
+  cacheTag("recommendations");
   // 1. Get user's high rated movies (8+) for genre preference
   const highRated = await prisma.rating.findMany({
     where: { userId: MOCK_USER_ID, value: { gte: 8 } },
@@ -43,16 +46,18 @@ export async function generateRecommendations(language: string = "en") {
   const genreScores: Record<number, number> = {};
   const topHighRated = highRated.slice(0, 5);
 
-  for (const rating of topHighRated) {
-    try {
-      const movie = await fetchTMDB(`/movie/${rating.movieId}`, language);
-      movie.genres?.forEach((g: any) => {
-        genreScores[g.id] = (genreScores[g.id] || 0) + 1;
-      });
-    } catch (e) {
-      console.error(`Failed to fetch genres for movie ${rating.movieId}`);
-    }
-  }
+  await Promise.all(
+    topHighRated.map(async (rating) => {
+      try {
+        const movie = await fetchTMDB(`/movie/${rating.movieId}`, language);
+        movie.genres?.forEach((g: any) => {
+          genreScores[g.id] = (genreScores[g.id] || 0) + 1;
+        });
+      } catch (e) {
+        console.error(`Failed to fetch genres for movie ${rating.movieId}`);
+      }
+    })
+  );
 
   // 5. Fetch more candidates (multiple pages) to ensure we have enough after filtering
   const [popular1, popular2, topRated1, topRated2] = await Promise.all([
@@ -103,7 +108,26 @@ export async function generateRecommendations(language: string = "en") {
     addedMovieIds.add(movie.id);
   }
 
-  // 6. Sort and save top 10
+  // 6. If we still don't have enough recommendations, relax the "seen" filter for trending
+  if (recommendations.length < 5) {
+    for (const movie of candidates) {
+      if (addedMovieIds.has(movie.id) || !movie.poster_path) continue;
+
+      recommendations.push({
+        userId: MOCK_USER_ID,
+        movieId: movie.id,
+        title: movie.title,
+        posterPath: movie.poster_path,
+        voteAverage: movie.vote_average,
+        score: movie.vote_average,
+        reason: "Popular choice",
+      });
+      addedMovieIds.add(movie.id);
+      if (recommendations.length >= 10) break;
+    }
+  }
+
+  // 7. Sort and save top 10
   recommendations.sort((a, b) => b.score - a.score);
   const top10 = recommendations.slice(0, 10);
 

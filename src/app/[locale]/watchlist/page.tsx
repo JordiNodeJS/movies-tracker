@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { Bookmark } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-const MOCK_USER_ID = "user_123";
+const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
 
 export default async function WatchlistPage({
   params,
@@ -25,7 +25,7 @@ export default async function WatchlistPage({
           </h1>
           <div className="flex items-center gap-4">
             <div className="h-[1px] w-12 bg-indigo-500" />
-            <p className="text-white/40 font-black uppercase tracking-[0.3em] text-[10px]">
+            <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>
           </div>
@@ -52,26 +52,21 @@ async function WatchlistContent() {
   ]);
 
   const ratingsMap = new Map(ratings.map((r) => [r.movieId, r.value]));
-  // We can't use useTranslations here because it's a server component called within Suspense
-  // but we can pass the translations or just use the same pattern as above if we move it.
-  // Actually, next-intl supports calling getTranslations in server components.
-  // But for simplicity, I'll just use a simple approach.
 
-  // Wait, I can just use getTranslations here.
   const { getTranslations } = require("next-intl/server");
   const t = await getTranslations("Watchlist");
 
   if (watchlist.length === 0) {
     return (
-      <div className="h-[50vh] flex flex-col items-center justify-center border border-white/5 bg-white/[0.02] rounded-[3rem] space-y-6">
-        <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center">
-          <Bookmark className="w-8 h-8 text-white/20" />
+      <div className="h-[50vh] flex flex-col items-center justify-center border border-foreground/5 bg-foreground/[0.02] rounded-[3rem] space-y-6">
+        <div className="w-20 h-20 rounded-full bg-foreground/5 flex items-center justify-center">
+          <Bookmark className="w-8 h-8 opacity-20" />
         </div>
         <div className="text-center">
-          <p className="text-white/40 font-black uppercase tracking-[0.2em] text-sm mb-2">
+          <p className="opacity-40 font-black uppercase tracking-[0.2em] text-sm mb-2">
             {t("empty")}
           </p>
-          <p className="text-white/20 text-xs font-bold uppercase tracking-widest">
+          <p className="opacity-20 text-xs font-bold uppercase tracking-widest">
             {t("emptySubtitle")}
           </p>
         </div>
