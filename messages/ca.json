@@ -1,0 +1,75 @@
+{
+  "Navbar": {
+    "home": "Inici",
+    "search": "Cercar",
+    "watchlist": "Llista",
+    "profile": "Perfil"
+  },
+  "Home": {
+    "title": "Obsessió",
+    "obsession": "Cinematogràfica",
+    "subtitle": "Experiències seleccionades per al cinèfil modern.",
+    "trending": "Tendències",
+    "forYou": "Per a Tu",
+    "viewAll": "Veure Tot"
+  },
+  "Movie": {
+    "featured": "Estrena Destacada",
+    "votes": "Vots",
+    "duration": "Durada",
+    "minutes": "{count} Minuts",
+    "overview": "Sinopsi",
+    "genres": "Gèneres",
+    "status": "Estat",
+    "budget": "Pressupost",
+    "revenue": "Recaptació",
+    "releaseDate": "Data d'Estrena",
+    "noPoster": "Sense Pòster",
+    "yourRating": "La Teva Qualificació",
+    "personalJournal": "Diari Personal",
+    "journalPlaceholder": "Escriu els teus pensaments sobre aquesta experiència cinematogràfica...",
+    "saveJournal": "Guardar Diari",
+    "deleteNote": "Eliminar Nota",
+    "watchlistAdd": "Llista de Seguimiento",
+    "watchlistRemove": "A la Llista",
+    "releaseDate": "Data d'Estrena",
+    "noPoster": "Sense Pòster"
+  },
+  "Search": {
+    "title": "Cercar",
+    "obsession": "Obsessió",
+    "placeholder": "Cerca pel·lícules, directors o gèneres...",
+    "noResults": "No s'han trobat pel·lícules"
+  },
+  "Watchlist": {
+    "title": "Llista",
+    "subtitle": "La teva col·lecció seleccionada de futures experiències",
+    "empty": "La teva llista està buida",
+    "emptySubtitle": "Comença a explorar per afegir pel·lícules que vulguis veure"
+  },
+  "Profile": {
+    "title": "Perfil",
+    "subtitle": "Entusiasta i Curador de Cinema",
+    "stats": "Estadístiques",
+    "ratings": "Qualificacions",
+    "journal": "Diari",
+    "recommendations": "Recomanacions",
+    "refreshEngine": "Actualitzar Motor",
+    "processing": "Processant...",
+    "engineUpdated": "Motor Actualitzat",
+    "engineTitle": "Motor de Recomanació",
+    "engineDescription": "El nostre motor neuronal analitza la teva llista i qualificacions per curar una selecció a mida d'experiències cinematogràfiques.",
+    "moviesWatched": "Pel·lícules Qualificades",
+    "watchlistCount": "Elements a la Llista",
+    "averageRating": "Qualificació Mitjana",
+    "recentJournalEntries": "Entradas Recents del Diari",
+    "viewAll": "Veure Tot",
+    "topRatings": "Millors Qualificacions",
+    "noJournal": "Encara no hi ha entrades al diari",
+    "noRatings": "Encara no hi ha qualificacions"
+  },
+  "Common": {
+    "noPoster": "Sense Pòster",
+    "movie": "Pel·lícula"
+  }
+}
