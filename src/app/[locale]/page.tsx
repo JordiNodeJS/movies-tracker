@@ -22,7 +22,7 @@ export default async function HomePage({
     <div className="space-y-24 pb-24">
       <div className="max-w-7xl mx-auto px-6 pt-12">
         <h1 className="text-4xl font-black tracking-tighter uppercase">
-          {t("title")} <span className="text-indigo-500">{t("obsession")}</span>
+          {t("title")} <span className="text-accent">{t("obsession")}</span>
         </h1>
       </div>
 
@@ -65,7 +65,7 @@ async function HeroSection({ locale }: { locale: string }) {
             sizes="100vw"
           />
         ) : (
-          <div className="absolute inset-0 bg-indigo-500/10" />
+          <div className="absolute inset-0 bg-accent/10" />
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
@@ -75,8 +75,8 @@ async function HeroSection({ locale }: { locale: string }) {
       <div className="relative h-full max-w-7xl mx-auto px-6 flex flex-col justify-center">
         <div className="max-w-3xl space-y-10">
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-16 bg-indigo-500" />
-            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-400">
+            <div className="h-[1px] w-16 bg-accent" />
+            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent">
               {t("featured")}
             </span>
           </div>
@@ -123,7 +123,7 @@ async function TrendingSection({ locale }: { locale: string }) {
           <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none">
             {t("trending")}
           </h2>
-          <div className="h-2 w-24 bg-indigo-600" />
+          <div className="h-2 w-24 bg-accent" />
         </div>
       </div>
 
@@ -149,7 +149,7 @@ async function RecommendationsSection({ locale }: { locale: string }) {
           <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none">
             {t("forYou")}
           </h2>
-          <div className="h-2 w-24 bg-indigo-600" />
+          <div className="h-2 w-24 bg-accent" />
         </div>
       </div>
 

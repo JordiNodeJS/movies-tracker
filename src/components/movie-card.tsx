@@ -51,7 +51,7 @@ export function MovieCard({
               <span>{movie.vote_average?.toFixed(1) || "0.0"}</span>
             </div>
             {userRating && userRating > 0 && (
-              <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-indigo-500/20 border border-indigo-500/20 text-indigo-500 text-[10px] font-black">
+              <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-accent/20 border border-accent/20 text-accent text-[10px] font-black">
                 <Star className="w-3 h-3 fill-current" />
                 <span>{userRating}</span>
               </div>

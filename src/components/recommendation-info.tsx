@@ -15,7 +15,7 @@ export function RecommendationInfo() {
       description: t("step1Desc"),
     },
     {
-      icon: <Sparkles className="w-4 h-4 text-indigo-500" />,
+      icon: <Sparkles className="w-4 h-4 text-accent" />,
       title: t("step2Title"),
       description: t("step2Desc"),
     },
@@ -37,7 +37,7 @@ export function RecommendationInfo() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 border border-foreground/10 hover:bg-foreground/10 transition-all group"
       >
-        <Info className="w-4 h-4 text-indigo-400 group-hover:rotate-12 transition-transform" />
+        <Info className="w-4 h-4 text-accent group-hover:rotate-12 transition-transform" />
         <span className="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100">
           {t("howItWorks")}
         </span>
@@ -52,7 +52,7 @@ export function RecommendationInfo() {
           <div className="absolute right-0 mt-4 w-80 z-50 bg-background border border-foreground/10 rounded-3xl p-8 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-xl font-black tracking-tighter uppercase">
-                {t("title")} <span className="text-indigo-500">{t("ia")}</span>
+                {t("title")} <span className="text-accent">{t("ia")}</span>
               </h3>
               <button
                 onClick={() => setIsOpen(false)}

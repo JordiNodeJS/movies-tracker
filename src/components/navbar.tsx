@@ -15,11 +15,11 @@ export async function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-foreground/5 bg-background/40 backdrop-blur-2xl">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
             <Film className="w-6 h-6 text-white" />
           </div>
           <span className="text-2xl font-black tracking-tighter uppercase">
-            Movies<span className="text-indigo-500">Tracker</span>
+            Movies<span className="text-accent">Tracker</span>
           </span>
         </Link>
 
