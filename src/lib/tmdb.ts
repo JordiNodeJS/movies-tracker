@@ -1,5 +1,3 @@
-"use server";
-
 // ⚠️ CACHING STRATEGY: Time-based revalidation
 // Using default cacheLife for TMDB API data.
 // Revalidates every 15 minutes by default in Next.js 16.
@@ -290,7 +288,6 @@ export async function fetchTMDB(
   language: string = "en",
   options: RequestInit = {}
 ) {
-  "use cache";
   // Check if we have valid credentials
   const hasValidCredentials =
     TMDB_ACCESS_TOKEN &&
@@ -343,15 +340,10 @@ export async function fetchTMDB(
 import { cacheLife, cacheTag } from "next/cache";
 
 export async function getTrendingMovies(language: string = "en") {
-  "use cache";
-  cacheLife("trending");
-  cacheTag("trending");
   return fetchTMDB("/trending/movie/day", language);
 }
 
 export async function searchMovies(query: string, language: string = "en") {
-  "use cache";
-  cacheLife("search");
   return fetchTMDB(
     `/search/movie?query=${encodeURIComponent(query)}`,
     language
@@ -362,9 +354,6 @@ export async function getMovieDetails(
   movieId: number,
   language: string = "en"
 ) {
-  "use cache";
-  cacheLife("movie");
-  cacheTag(`movie-${movieId}`);
   return fetchTMDB(
     `/movie/${movieId}?append_to_response=videos,credits,recommendations`,
     language
@@ -372,7 +361,5 @@ export async function getMovieDetails(
 }
 
 export async function getGenres(language: string = "en") {
-  "use cache";
-  cacheLife("genres");
   return fetchTMDB("/genre/movie/list", language);
 }

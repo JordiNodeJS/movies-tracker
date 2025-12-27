@@ -1,13 +1,13 @@
 import { Link } from "@/i18n/routing";
 import { Film, Search, Bookmark, User, LogOut, LogIn } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
 import { cookies } from "next/headers";
 import { logout } from "@/lib/auth-actions";
 
 export async function Navbar() {
-  const t = useTranslations("Navbar");
+  const t = await getTranslations("Navbar");
   const cookieStore = await cookies();
   const isLoggedIn = !!cookieStore.get("auth_token");
 
