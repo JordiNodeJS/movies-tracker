@@ -1,11 +1,15 @@
 import { Link } from "@/i18n/routing";
-import { Film, Search, Bookmark, User } from "lucide-react";
+import { Film, Search, Bookmark, User, LogOut, LogIn } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
+import { cookies } from "next/headers";
+import { logout } from "@/lib/auth-actions";
 
-export function Navbar() {
+export async function Navbar() {
   const t = useTranslations("Navbar");
+  const cookieStore = await cookies();
+  const isLoggedIn = !!cookieStore.get("auth_token");
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-foreground/5 bg-background/40 backdrop-blur-2xl">
@@ -30,16 +34,46 @@ export function Navbar() {
             icon={<Search className="w-4 h-4" />}
             label={t("search")}
           />
-          <NavLink
-            href="/watchlist"
-            icon={<Bookmark className="w-4 h-4" />}
-            label={t("watchlist")}
-          />
-          <NavLink
-            href="/profile"
-            icon={<User className="w-4 h-4" />}
-            label={t("profile")}
-          />
+
+          {isLoggedIn ? (
+            <>
+              <NavLink
+                href="/watchlist"
+                icon={<Bookmark className="w-4 h-4" />}
+                label={t("watchlist")}
+              />
+              <NavLink
+                href="/profile"
+                icon={<User className="w-4 h-4" />}
+                label={t("profile")}
+              />
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="text-sm font-bold uppercase tracking-widest opacity-50 hover:opacity-100 transition-all flex items-center gap-2 group"
+                >
+                  <span className="group-hover:scale-110 transition-transform">
+                    <LogOut className="w-4 h-4" />
+                  </span>
+                  <span>Logout</span>
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <NavLink
+                href="/login"
+                icon={<LogIn className="w-4 h-4" />}
+                label="Login"
+              />
+              <NavLink
+                href="/register"
+                icon={<User className="w-4 h-4" />}
+                label="Register"
+              />
+            </>
+          )}
+
           <div className="flex items-center gap-2 border-l border-foreground/10 pl-6">
             <LanguageSwitcher />
             <ThemeToggle />
