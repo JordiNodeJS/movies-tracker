@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { generateRecommendations } from "@/lib/recommendations";
-import { useRouter } from "@/i18n/routing";
+import { generateRecommendations } from "@/lib/recommendation-actions";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations, useLocale } from "next-intl";
 
 export function RecommendationButton() {
@@ -28,7 +28,7 @@ export function RecommendationButton() {
     <button
       onClick={handleRefresh}
       disabled={isGenerating}
-      className="px-4 py-2 bg-foreground text-background text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all disabled:opacity-50"
+      className="px-6 py-3 border-2 border-ui-accent-primary text-ui-accent-primary text-xs font-black uppercase tracking-[0.2em] hover:bg-ui-accent-primary hover:text-black hover:shadow-[0_0_20px_var(--ui-glow)] transition-all disabled:opacity-50 italic"
     >
       {isGenerating
         ? t("processing")

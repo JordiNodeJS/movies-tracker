@@ -49,6 +49,6 @@ The recommendation system uses a scoring algorithm based on:
 
 The UI follows an "Avant-Garde" aesthetic, focusing on:
 
-- **High Contrast:** Deep blacks and vibrant indigo accents.
+- **High Contrast:** Deep blacks and vibrant violet accents.
 - **Typography:** Bold, black-weighted headings for a brutalist yet refined look.
 - **Micro-interactions:** Smooth transitions and backdrop blurs for a premium feel.

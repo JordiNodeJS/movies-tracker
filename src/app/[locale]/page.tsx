@@ -5,7 +5,7 @@ import { RecommendationInfo } from "@/components/recommendation-info";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { Play, Info, Sparkles } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -21,8 +21,11 @@ export default async function HomePage({
   return (
     <div className="space-y-24 pb-24">
       <div className="max-w-7xl mx-auto px-6 pt-12">
-        <h1 className="text-4xl font-black tracking-tighter uppercase">
-          {t("title")} <span className="text-indigo-500">{t("obsession")}</span>
+        <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-tight">
+          {t("title")}{" "}
+          <span className="text-ui-accent-primary neon-text-cyan block md:inline">
+            {t("obsession")}
+          </span>
         </h1>
       </div>
 
@@ -52,21 +55,22 @@ async function HeroSection({ locale }: { locale: string }) {
   if (!featured) return null;
 
   return (
-    <section className="relative h-[90vh] w-full overflow-hidden">
+    <section className="relative h-[90vh] w-full border-y-2 border-ui-border/20 scanlines">
       {/* Backdrop */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         {featured.backdrop_path ? (
           <Image
             src={`https://image.tmdb.org/t/p/original${featured.backdrop_path}`}
             alt={featured.title}
             fill
-            className="object-cover scale-105 animate-pulse-slow"
+            className="object-cover scale-105 animate-pulse-slow brightness-50"
             priority
+            sizes="100vw"
           />
         ) : (
-          <div className="absolute inset-0 bg-indigo-500/10" />
+          <div className="absolute inset-0 bg-ui-accent-primary/10" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
       </div>
 
@@ -74,34 +78,34 @@ async function HeroSection({ locale }: { locale: string }) {
       <div className="relative h-full max-w-7xl mx-auto px-6 flex flex-col justify-center">
         <div className="max-w-3xl space-y-10">
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-16 bg-indigo-500" />
-            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-400">
+            <div className="h-[2px] w-16 bg-ui-accent-primary shadow-[0_0_10px_var(--ui-accent-primary)]" />
+            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-ui-accent-primary neon-text-cyan">
               {t("featured")}
             </span>
           </div>
 
-          <h1 className="text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85] text-balance">
+          <h1 className="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter uppercase leading-[1.1] text-balance italic text-ui-accent-primary neon-text-cyan py-6 px-2">
             {featured.title}
           </h1>
 
-          <p className="text-xl opacity-50 max-w-xl leading-relaxed font-medium text-balance">
+          <p className="text-xl text-ui-accent-primary/80 max-w-xl leading-relaxed font-black text-balance uppercase tracking-tight line-clamp-4">
             {featured.overview}
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 pt-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 pt-6">
             <Link
               href={`/movie/${featured.id}`}
-              className="h-16 px-10 bg-foreground text-background rounded-full flex items-center gap-4 font-black uppercase tracking-tighter hover:scale-105 transition-transform shadow-foreground/10 shadow-xl"
+              className="h-14 sm:h-16 px-6 sm:px-10 bg-ui-accent-primary text-black flex items-center justify-center sm:justify-start gap-4 font-black uppercase tracking-tighter hover:shadow-[0_0_30px_var(--ui-glow)] transition-all italic"
             >
-              <Play className="w-6 h-6 fill-current" />
-              {t("watchlistAdd")}
+              <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
+              <span className="text-sm sm:text-base">{t("watchlistAdd")}</span>
             </Link>
             <Link
               href={`/movie/${featured.id}`}
-              className="h-16 px-10 bg-white/5 backdrop-blur-2xl border border-white/10 text-white rounded-full flex items-center gap-4 font-black uppercase tracking-tighter hover:bg-white/10 transition-all"
+              className="h-14 sm:h-16 px-6 sm:px-10 bg-ui-bg/40 backdrop-blur-2xl border-2 border-ui-accent-primary text-ui-accent-primary flex items-center justify-center sm:justify-start gap-4 font-black uppercase tracking-tighter hover:bg-ui-accent-primary hover:text-black transition-all italic"
             >
-              <Info className="w-6 h-6" />
-              {t("overview")}
+              <Info className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="text-sm sm:text-base">{t("overview")}</span>
             </Link>
           </div>
         </div>
@@ -119,10 +123,10 @@ async function TrendingSection({ locale }: { locale: string }) {
     <section>
       <div className="flex items-end justify-between mb-16">
         <div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none">
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-[1.1] italic text-ui-accent-primary neon-text-cyan py-2 px-1">
             {t("trending")}
           </h2>
-          <div className="h-2 w-24 bg-indigo-600" />
+          <div className="h-2 w-24 bg-ui-accent-primary shadow-[0_0_15px_var(--ui-accent-primary)]" />
         </div>
       </div>
 
@@ -136,53 +140,38 @@ async function TrendingSection({ locale }: { locale: string }) {
 }
 
 async function RecommendationsSection({ locale }: { locale: string }) {
-  await connection();
   const recommendations = await getRecommendations();
   const t = await getTranslations("Home");
 
   if (recommendations.length === 0) return null;
 
-  const isPersonalized = recommendations.some(
-    (rec: any) => rec.reason === "Based on your favorite genres"
-  );
-
-  const movies = recommendations.map((rec: any) => ({
-    id: rec.movieId,
-    title: rec.title,
-    poster_path: rec.posterPath,
-    vote_average: rec.voteAverage,
-  }));
-
   return (
-    <section>
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-        <div className="space-y-6">
-          <div className="flex items-center gap-4">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
-              {isPersonalized ? t("forYou") : t("discover")}
-            </h2>
-            {isPersonalized && (
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
-                <Sparkles className="w-3 h-3" />
-                <span className="text-[10px] font-black uppercase tracking-widest">
-                  AI
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="h-2 w-24 bg-indigo-600" />
-          {!isPersonalized && (
-            <p className="text-white/40 font-medium uppercase tracking-[0.2em] text-[10px] max-w-md leading-relaxed text-balance">
-              {t("discoverSubtitle")}
-            </p>
-          )}
+    <section className="space-y-16">
+      <div className="flex items-end justify-between mb-16">
+        <div>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-[1.1] italic text-ui-accent-secondary neon-text-magenta py-2 px-1">
+            {t("forYou")}
+          </h2>
+          <div className="h-2 w-24 bg-ui-accent-secondary shadow-[0_0_15px_var(--ui-accent-secondary)]" />
         </div>
-        <RecommendationInfo />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-16">
-        {movies.map((movie: any) => (
-          <MovieCard key={movie.id} movie={movie} />
+        {recommendations.map((rec) => (
+          <div key={rec.movieId} className="space-y-4">
+            <MovieCard
+              movie={{
+                id: rec.movieId,
+                title: rec.title || "Unknown Movie",
+                poster_path: rec.posterPath || "/placeholder.jpg",
+                vote_average: rec.voteAverage || 0,
+                release_date: "",
+                overview: "",
+                backdrop_path: "",
+              }}
+            />
+            <RecommendationInfo />
+          </div>
         ))}
       </div>
     </section>
@@ -190,20 +179,22 @@ async function RecommendationsSection({ locale }: { locale: string }) {
 }
 
 function HeroSkeleton() {
-  return <div className="h-[90vh] w-full bg-white/5 animate-pulse" />;
+  return (
+    <div className="h-[90vh] w-full bg-ui-accent-primary/5 animate-pulse scanlines" />
+  );
 }
 
 function SectionSkeleton({ title }: { title: string }) {
   return (
     <section className="space-y-12">
-      <h2 className="text-4xl font-black tracking-tighter uppercase italic opacity-20">
+      <h2 className="text-4xl font-black tracking-tighter uppercase italic opacity-20 text-ui-accent-primary">
         {title}
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="aspect-[2/3] bg-white/5 rounded-2xl animate-pulse"
+            className="aspect-[2/3] bg-ui-accent-primary/5 border border-ui-border/10 animate-pulse"
           />
         ))}
       </div>

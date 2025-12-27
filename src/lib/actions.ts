@@ -4,21 +4,23 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { connection } from "next/server";
 import { getMovieDetails } from "@/lib/tmdb";
-
-// Mock user ID for now - in a real app, this would come from auth
-const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
+import { cookies } from "next/headers";
+import { verifyJWT } from "@/lib/jwt";
 
 export async function ensureUser() {
   await connection();
-  return await prisma.user.upsert({
-    where: { email: "jordi.nodejs@gmail.com" },
-    update: {},
-    create: {
-      id: MOCK_USER_ID,
-      email: "jordi.nodejs@gmail.com",
-      name: "Jordi",
-    },
-  });
+  const cookieStore = await cookies();
+  const token = cookieStore.get("auth_token")?.value;
+
+  if (!token) throw new Error("Unauthorized");
+
+  const payload = await verifyJWT(token);
+  if (!payload || !payload.userId) throw new Error("Unauthorized");
+
+  const user = await prisma.user.findUnique({ where: { id: payload.userId } });
+  if (!user) throw new Error("Unauthorized");
+
+  return user;
 }
 
 export async function toggleWatchlist(
@@ -26,12 +28,12 @@ export async function toggleWatchlist(
   title: string,
   posterPath: string
 ) {
-  await ensureUser();
+  const user = await ensureUser();
 
   const existing = await prisma.watchlistItem.findUnique({
     where: {
       userId_movieId: {
-        userId: MOCK_USER_ID,
+        userId: user.id,
         movieId,
       },
     },
@@ -44,7 +46,7 @@ export async function toggleWatchlist(
   } else {
     await prisma.watchlistItem.create({
       data: {
-        userId: MOCK_USER_ID,
+        userId: user.id,
         movieId,
         title,
         posterPath,
@@ -54,8 +56,8 @@ export async function toggleWatchlist(
 
   revalidatePath(`/movie/${movieId}`);
   revalidatePath("/watchlist");
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function saveNote(
@@ -64,18 +66,18 @@ export async function saveNote(
   title?: string,
   posterPath?: string
 ) {
-  await ensureUser();
+  const user = await ensureUser();
 
   await prisma.note.upsert({
     where: {
       userId_movieId: {
-        userId: MOCK_USER_ID,
+        userId: user.id,
         movieId,
       },
     },
     update: { content, title, posterPath },
     create: {
-      userId: MOCK_USER_ID,
+      userId: user.id,
       movieId,
       content,
       title,
@@ -84,8 +86,8 @@ export async function saveNote(
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function saveRating(
@@ -94,18 +96,18 @@ export async function saveRating(
   title?: string,
   posterPath?: string
 ) {
-  await ensureUser();
+  const user = await ensureUser();
 
   await prisma.rating.upsert({
     where: {
       userId_movieId: {
-        userId: MOCK_USER_ID,
+        userId: user.id,
         movieId,
       },
     },
     update: { value, title, posterPath },
     create: {
-      userId: MOCK_USER_ID,
+      userId: user.id,
       movieId,
       value,
       title,
@@ -114,67 +116,60 @@ export async function saveRating(
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function deleteNote(movieId: number) {
-  await ensureUser();
+  const user = await ensureUser();
 
   await prisma.note.delete({
     where: {
       userId_movieId: {
-        userId: MOCK_USER_ID,
+        userId: user.id,
         movieId,
       },
     },
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function deleteRating(movieId: number) {
-  await ensureUser();
+  const user = await ensureUser();
 
   await prisma.rating.delete({
     where: {
       userId_movieId: {
-        userId: MOCK_USER_ID,
+        userId: user.id,
         movieId,
       },
     },
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function getMovieUserData(movieId: number) {
   await connection();
-  console.log("Fetching user data for movie:", movieId);
   try {
-    await ensureUser();
-    console.log("User ensured");
+    const user = await ensureUser();
 
     const [watchlist, note, rating] = await Promise.all([
       prisma.watchlistItem.findUnique({
-        where: { userId_movieId: { userId: MOCK_USER_ID, movieId } },
+        where: { userId_movieId: { userId: user.id, movieId } },
       }),
       prisma.note.findUnique({
-        where: { userId_movieId: { userId: MOCK_USER_ID, movieId } },
+        where: { userId_movieId: { userId: user.id, movieId } },
       }),
       prisma.rating.findUnique({
-        where: { userId_movieId: { userId: MOCK_USER_ID, movieId } },
+        where: { userId_movieId: { userId: user.id, movieId } },
       }),
     ]);
-    console.log("Data fetched:", {
-      watchlist: !!watchlist,
-      note: !!note,
-      rating: !!rating,
-    });
 
     return {
       isInWatchlist: !!watchlist,
@@ -182,7 +177,6 @@ export async function getMovieUserData(movieId: number) {
       rating: rating?.value || 0,
     };
   } catch (error) {
-    console.error("Error in getMovieUserData:", error);
     return {
       isInWatchlist: false,
       note: "",
@@ -193,24 +187,24 @@ export async function getMovieUserData(movieId: number) {
 
 export async function getProfileData() {
   await connection();
-  await ensureUser();
+  const user = await ensureUser();
 
   const [ratings, notes, watchlist, recs] = await Promise.all([
     prisma.rating.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
       orderBy: { updatedAt: "desc" },
       take: 10,
     }),
     prisma.note.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
       orderBy: { updatedAt: "desc" },
       take: 5,
     }),
     prisma.watchlistItem.count({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
     }),
     prisma.recommendation.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
       orderBy: { score: "desc" },
       take: 5,
     }),
@@ -222,7 +216,7 @@ export async function getProfileData() {
   }));
 
   const allRatings = await prisma.rating.findMany({
-    where: { userId: MOCK_USER_ID },
+    where: { userId: user.id },
     select: { value: true },
   });
 
@@ -234,6 +228,7 @@ export async function getProfileData() {
       : "0.0";
 
   return {
+    userId: user.id,
     ratings,
     notes,
     recommendations,

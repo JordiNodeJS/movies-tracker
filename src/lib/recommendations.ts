@@ -1,32 +1,32 @@
-"use server";
-
 import { prisma } from "@/lib/prisma";
 import { fetchTMDB } from "@/lib/tmdb";
-import { cacheLife, cacheTag } from "next/cache";
+import { ensureUser } from "./actions";
 
-const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
+export async function generateRecommendations(
+  userId: string,
+  language: string = "en"
+) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) return [];
 
-export async function generateRecommendations(language: string = "en") {
-  "use cache";
-  cacheTag("recommendations");
   // 1. Get user's high rated movies (8+) for genre preference
   const highRated = await prisma.rating.findMany({
-    where: { userId: MOCK_USER_ID, value: { gte: 8 } },
+    where: { userId, value: { gte: 8 } },
     select: { movieId: true },
   });
 
   // 2. Get ALL user interactions to filter them out
   const [watchlist, allRatings, notes] = await Promise.all([
     prisma.watchlistItem.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId },
       select: { movieId: true },
     }),
     prisma.rating.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId },
       select: { movieId: true },
     }),
     prisma.note.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId },
       select: { movieId: true },
     }),
   ]);
@@ -95,7 +95,7 @@ export async function generateRecommendations(language: string = "en") {
     });
 
     recommendations.push({
-      userId: MOCK_USER_ID,
+      userId,
       movieId: movie.id,
       title: movie.title,
       posterPath: movie.poster_path,
@@ -114,7 +114,7 @@ export async function generateRecommendations(language: string = "en") {
       if (addedMovieIds.has(movie.id) || !movie.poster_path) continue;
 
       recommendations.push({
-        userId: MOCK_USER_ID,
+        userId,
         movieId: movie.id,
         title: movie.title,
         posterPath: movie.poster_path,
@@ -133,23 +133,32 @@ export async function generateRecommendations(language: string = "en") {
 
   // Clear old recommendations and save new ones in a transaction
   await prisma.$transaction([
-    prisma.recommendation.deleteMany({ where: { userId: MOCK_USER_ID } }),
+    prisma.recommendation.deleteMany({ where: { userId } }),
     prisma.recommendation.createMany({ data: top10 }),
   ]);
 
-  return top10;
-}
-
-export async function getRecommendations() {
-  const recs = await prisma.recommendation.findMany({
-    where: { userId: MOCK_USER_ID },
+  return await prisma.recommendation.findMany({
+    where: { userId },
     orderBy: { score: "desc" },
     take: 10,
   });
+}
 
-  if (recs.length === 0) {
-    return await generateRecommendations();
+export async function getRecommendations() {
+  try {
+    const user = await ensureUser();
+    const recs = await prisma.recommendation.findMany({
+      where: { userId: user.id },
+      orderBy: { score: "desc" },
+      take: 10,
+    });
+
+    if (recs.length === 0) {
+      return await generateRecommendations(user.id);
+    }
+
+    return recs;
+  } catch (error) {
+    return [];
   }
-
-  return recs;
 }

@@ -4,8 +4,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { Bookmark } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-
-const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
+import { ensureUser } from "@/lib/actions";
 
 export default async function WatchlistPage({
   params,
@@ -20,12 +19,12 @@ export default async function WatchlistPage({
     <div className="max-w-7xl mx-auto px-6 py-32 space-y-20">
       <section>
         <div className="mb-16">
-          <h1 className="text-7xl font-black tracking-tighter mb-4 uppercase leading-none">
+          <h1 className="text-7xl font-black tracking-tighter mb-4 uppercase leading-[1.1] py-2 px-1">
             {t("title")}
           </h1>
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-indigo-500" />
-            <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
+            <div className="h-[1px] w-12 bg-ui-accent-primary" />
+            <p className="opacity-80 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>
           </div>
@@ -41,13 +40,15 @@ export default async function WatchlistPage({
 
 async function WatchlistContent() {
   await connection();
+  const user = await ensureUser();
+
   const [watchlist, ratings] = await Promise.all([
     prisma.watchlistItem.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
       orderBy: { addedAt: "desc" },
     }),
     prisma.rating.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
     }),
   ]);
 
@@ -58,15 +59,15 @@ async function WatchlistContent() {
 
   if (watchlist.length === 0) {
     return (
-      <div className="h-[50vh] flex flex-col items-center justify-center border border-foreground/5 bg-foreground/[0.02] rounded-[3rem] space-y-6">
-        <div className="w-20 h-20 rounded-full bg-foreground/5 flex items-center justify-center">
+      <div className="h-[50vh] flex flex-col items-center justify-center border border-ui-border/5 bg-ui-bg/[0.02] space-y-6">
+        <div className="w-20 h-20 bg-ui-text/5 flex items-center justify-center">
           <Bookmark className="w-8 h-8 opacity-20" />
         </div>
         <div className="text-center">
-          <p className="opacity-40 font-black uppercase tracking-[0.2em] text-sm mb-2">
+          <p className="opacity-80 font-black uppercase tracking-[0.2em] text-sm mb-2">
             {t("empty")}
           </p>
-          <p className="opacity-20 text-xs font-bold uppercase tracking-widest">
+          <p className="opacity-60 text-xs font-bold uppercase tracking-widest">
             {t("emptySubtitle")}
           </p>
         </div>
