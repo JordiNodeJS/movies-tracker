@@ -14,6 +14,14 @@
   --color-neon-magenta: #ff00ff;
   --color-neon-yellow: #fdee00;
 
+  --color-ui-bg: var(--ui-bg);
+  --color-ui-text: var(--ui-text);
+  --color-ui-border: var(--ui-border);
+  --color-ui-accent-primary: var(--ui-accent-primary);
+  --color-ui-accent-secondary: var(--ui-accent-secondary);
+  --color-ui-accent-tertiary: var(--ui-accent-tertiary);
+  --color-ui-card-bg: var(--ui-card-bg);
+
   --radius-xl: 0px;
   --radius-2xl: 0px;
   --radius-3xl: 0px;
@@ -59,31 +67,69 @@
     --background: #fdee00;
     --foreground: #050505;
     --accent: 0 243 255;
+
+    /* Semantic UI Variables - Light Mode (High Contrast Cyber) */
+    --ui-bg: #fdee00;
+    --ui-text: #050505;
+    --ui-border: #050505;
+    --ui-accent-primary: #0066cc; /* Darker Cyan for better contrast on yellow */
+    --ui-accent-secondary: #cc0066; /* Darker Magenta */
+    --ui-accent-tertiary: #050505; /* Use black as tertiary in light mode */
+    --ui-glow: rgba(0, 102, 204, 0.3);
+    --ui-card-bg: rgba(255, 255, 255, 0.95);
+    --ui-glass-bg: rgba(253, 238, 0, 0.9);
+    --ui-glass-border: #050505;
   }
 
   .dark {
     --background: #050505;
     --foreground: #00f3ff;
     --accent: 0 243 255;
+
+    /* Semantic UI Variables - Dark Mode */
+    --ui-bg: #050505;
+    --ui-text: #00f3ff;
+    --ui-border: #00f3ff;
+    --ui-accent-primary: #00f3ff;
+    --ui-accent-secondary: #ff00ff;
+    --ui-accent-tertiary: #fdee00;
+    --ui-glow: rgba(0, 243, 255, 0.6);
+    --ui-card-bg: rgba(13, 2, 33, 0.9);
+    --ui-glass-bg: rgba(5, 5, 5, 0.8);
+    --ui-glass-border: #00f3ff;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    selection-background-color: #00f3ff;
-    selection-color: #050505;
+    selection-background-color: var(--ui-accent-primary);
+    selection-color: var(--ui-bg);
     background-image:
-      linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+      linear-gradient(
+        color-mix(in srgb, var(--ui-accent-primary) 10%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--ui-accent-primary) 10%, transparent) 1px,
+        transparent 1px
+      );
     background-size: 20px 20px;
   }
 
   .dark body {
-    background-color: #050505;
+    background-color: var(--ui-bg);
     background-image:
-      linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px),
-      radial-gradient(circle at 50% 50%, #0d0221 0%, #050505 100%);
+      linear-gradient(
+        color-mix(in srgb, var(--ui-accent-primary) 15%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--ui-accent-primary) 15%, transparent) 1px,
+        transparent 1px
+      ),
+      radial-gradient(circle at 50% 50%, #0d0221 0%, var(--ui-bg) 100%);
     background-size:
       40px 40px,
       40px 40px,
@@ -93,10 +139,10 @@
 
 @layer utilities {
   .glass {
-    background: color-mix(in srgb, var(--background) 80%, transparent);
+    background: var(--ui-glass-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid var(--color-neon-cyan);
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+    border: 1px solid var(--ui-glass-border);
+    box-shadow: 0 0 10px var(--ui-glow);
   }
 
   .glass-hover {
@@ -104,38 +150,37 @@
   }
 
   .glass-hover:hover {
-    background: color-mix(in srgb, var(--background) 90%, transparent);
-    border-color: var(--color-neon-magenta);
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+    background: color-mix(in srgb, var(--ui-glass-bg) 90%, white);
+    border-color: var(--ui-accent-secondary);
+    box-shadow: 0 0 20px var(--ui-accent-secondary);
   }
 
   .neon-text-cyan {
     text-shadow:
-      0 0 5px #00f3ff,
-      0 0 10px #00f3ff;
+      0 0 5px var(--ui-accent-primary),
+      0 0 10px var(--ui-accent-primary);
   }
 
   .neon-text-magenta {
     text-shadow:
-      0 0 5px #ff00ff,
-      0 0 10px #ff00ff;
+      0 0 5px var(--ui-accent-secondary),
+      0 0 10px var(--ui-accent-secondary);
   }
 
   .neon-border-cyan {
     box-shadow:
-      0 0 5px #00f3ff,
-      inset 0 0 5px #00f3ff;
+      0 0 5px var(--ui-accent-primary),
+      inset 0 0 5px var(--ui-accent-primary);
   }
 
   .neon-border-magenta {
     box-shadow:
-      0 0 5px #ff00ff,
-      inset 0 0 5px #ff00ff;
+      0 0 5px var(--ui-accent-secondary),
+      inset 0 0 5px var(--ui-accent-secondary);
   }
 
   .scanlines {
     position: relative;
-    overflow: hidden;
   }
 
   .scanlines::after {
@@ -147,12 +192,12 @@
     bottom: 0;
     right: 0;
     background:
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
       linear-gradient(
         90deg,
-        rgba(255, 0, 0, 0.06),
-        rgba(0, 255, 0, 0.02),
-        rgba(0, 0, 255, 0.06)
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.03)
       );
     z-index: 2;
     background-size:
@@ -164,8 +209,8 @@
   .text-gradient {
     background: linear-gradient(
       to bottom right,
-      var(--color-neon-cyan),
-      var(--color-neon-magenta)
+      var(--ui-accent-primary),
+      var(--ui-accent-secondary)
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

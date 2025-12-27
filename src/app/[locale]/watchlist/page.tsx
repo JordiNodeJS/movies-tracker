@@ -19,11 +19,11 @@ export default async function WatchlistPage({
     <div className="max-w-7xl mx-auto px-6 py-32 space-y-20">
       <section>
         <div className="mb-16">
-          <h1 className="text-7xl font-black tracking-tighter mb-4 uppercase leading-none">
+          <h1 className="text-7xl font-black tracking-tighter mb-4 uppercase leading-[1.1] py-2 px-1">
             {t("title")}
           </h1>
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-accent" />
+            <div className="h-[1px] w-12 bg-ui-accent-primary" />
             <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>
@@ -59,8 +59,8 @@ async function WatchlistContent() {
 
   if (watchlist.length === 0) {
     return (
-      <div className="h-[50vh] flex flex-col items-center justify-center border border-foreground/5 bg-foreground/[0.02] rounded-[3rem] space-y-6">
-        <div className="w-20 h-20 rounded-full bg-foreground/5 flex items-center justify-center">
+      <div className="h-[50vh] flex flex-col items-center justify-center border border-ui-border/5 bg-ui-bg/[0.02] space-y-6">
+        <div className="w-20 h-20 bg-ui-text/5 flex items-center justify-center">
           <Bookmark className="w-8 h-8 opacity-20" />
         </div>
         <div className="text-center">

@@ -21,9 +21,9 @@ export default async function HomePage({
   return (
     <div className="space-y-24 pb-24">
       <div className="max-w-7xl mx-auto px-6 pt-12">
-        <h1 className="text-4xl font-black tracking-tighter uppercase italic">
+        <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-tight">
           {t("title")}{" "}
-          <span className="text-neon-cyan neon-text-cyan">
+          <span className="text-ui-accent-primary neon-text-cyan block md:inline">
             {t("obsession")}
           </span>
         </h1>
@@ -55,9 +55,9 @@ async function HeroSection({ locale }: { locale: string }) {
   if (!featured) return null;
 
   return (
-    <section className="relative h-[90vh] w-full overflow-hidden border-y-2 border-neon-cyan/20 scanlines">
+    <section className="relative h-[90vh] w-full border-y-2 border-ui-border/20 scanlines">
       {/* Backdrop */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         {featured.backdrop_path ? (
           <Image
             src={`https://image.tmdb.org/t/p/original${featured.backdrop_path}`}
@@ -68,7 +68,7 @@ async function HeroSection({ locale }: { locale: string }) {
             sizes="100vw"
           />
         ) : (
-          <div className="absolute inset-0 bg-neon-cyan/10" />
+          <div className="absolute inset-0 bg-ui-accent-primary/10" />
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
@@ -78,34 +78,34 @@ async function HeroSection({ locale }: { locale: string }) {
       <div className="relative h-full max-w-7xl mx-auto px-6 flex flex-col justify-center">
         <div className="max-w-3xl space-y-10">
           <div className="flex items-center gap-4">
-            <div className="h-[2px] w-16 bg-neon-cyan shadow-[0_0_10px_#00f3ff]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-neon-cyan neon-text-cyan">
+            <div className="h-[2px] w-16 bg-ui-accent-primary shadow-[0_0_10px_var(--ui-accent-primary)]" />
+            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-ui-accent-primary neon-text-cyan">
               {t("featured")}
             </span>
           </div>
 
-          <h1 className="text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85] text-balance italic text-neon-cyan neon-text-cyan">
+          <h1 className="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter uppercase leading-[1.1] text-balance italic text-ui-accent-primary neon-text-cyan py-6 px-2">
             {featured.title}
           </h1>
 
-          <p className="text-xl text-neon-cyan/60 max-w-xl leading-relaxed font-black text-balance uppercase tracking-tight">
+          <p className="text-xl text-ui-accent-primary/60 max-w-xl leading-relaxed font-black text-balance uppercase tracking-tight">
             {featured.overview}
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 pt-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 pt-6">
             <Link
               href={`/movie/${featured.id}`}
-              className="h-16 px-10 bg-neon-cyan text-black flex items-center gap-4 font-black uppercase tracking-tighter hover:shadow-[0_0_30px_rgba(0,243,255,0.6)] transition-all italic"
+              className="h-14 sm:h-16 px-6 sm:px-10 bg-ui-accent-primary text-black flex items-center justify-center sm:justify-start gap-4 font-black uppercase tracking-tighter hover:shadow-[0_0_30px_var(--ui-glow)] transition-all italic"
             >
-              <Play className="w-6 h-6 fill-current" />
-              {t("watchlistAdd")}
+              <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
+              <span className="text-sm sm:text-base">{t("watchlistAdd")}</span>
             </Link>
             <Link
               href={`/movie/${featured.id}`}
-              className="h-16 px-10 bg-background/40 backdrop-blur-2xl border-2 border-neon-cyan text-neon-cyan flex items-center gap-4 font-black uppercase tracking-tighter hover:bg-neon-cyan hover:text-black transition-all italic"
+              className="h-14 sm:h-16 px-6 sm:px-10 bg-ui-bg/40 backdrop-blur-2xl border-2 border-ui-accent-primary text-ui-accent-primary flex items-center justify-center sm:justify-start gap-4 font-black uppercase tracking-tighter hover:bg-ui-accent-primary hover:text-black transition-all italic"
             >
-              <Info className="w-6 h-6" />
-              {t("overview")}
+              <Info className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="text-sm sm:text-base">{t("overview")}</span>
             </Link>
           </div>
         </div>
@@ -123,10 +123,10 @@ async function TrendingSection({ locale }: { locale: string }) {
     <section>
       <div className="flex items-end justify-between mb-16">
         <div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none italic text-neon-cyan neon-text-cyan">
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-[1.1] italic text-ui-accent-primary neon-text-cyan py-2 px-1">
             {t("trending")}
           </h2>
-          <div className="h-2 w-24 bg-neon-cyan shadow-[0_0_15px_#00f3ff]" />
+          <div className="h-2 w-24 bg-ui-accent-primary shadow-[0_0_15px_var(--ui-accent-primary)]" />
         </div>
       </div>
 
@@ -149,10 +149,10 @@ async function RecommendationsSection({ locale }: { locale: string }) {
     <section className="space-y-16">
       <div className="flex items-end justify-between mb-16">
         <div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none italic text-neon-magenta neon-text-magenta">
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-[1.1] italic text-ui-accent-secondary neon-text-magenta py-2 px-1">
             {t("forYou")}
           </h2>
-          <div className="h-2 w-24 bg-neon-magenta shadow-[0_0_15px_#ff00ff]" />
+          <div className="h-2 w-24 bg-ui-accent-secondary shadow-[0_0_15px_var(--ui-accent-secondary)]" />
         </div>
       </div>
 
@@ -162,16 +162,15 @@ async function RecommendationsSection({ locale }: { locale: string }) {
             <MovieCard
               movie={{
                 id: rec.movieId,
-                title: rec.title,
-                poster_path: rec.posterPath,
-                vote_average: rec.voteAverage,
+                title: rec.title || "Unknown Movie",
+                poster_path: rec.posterPath || "/placeholder.jpg",
+                vote_average: rec.voteAverage || 0,
                 release_date: "",
                 overview: "",
                 backdrop_path: "",
-                media_type: "movie",
               }}
             />
-            <RecommendationInfo reason={rec.reason} score={rec.score} />
+            <RecommendationInfo />
           </div>
         ))}
       </div>
@@ -181,21 +180,21 @@ async function RecommendationsSection({ locale }: { locale: string }) {
 
 function HeroSkeleton() {
   return (
-    <div className="h-[90vh] w-full bg-neon-cyan/5 animate-pulse scanlines" />
+    <div className="h-[90vh] w-full bg-ui-accent-primary/5 animate-pulse scanlines" />
   );
 }
 
 function SectionSkeleton({ title }: { title: string }) {
   return (
     <section className="space-y-12">
-      <h2 className="text-4xl font-black tracking-tighter uppercase italic opacity-20 text-neon-cyan">
+      <h2 className="text-4xl font-black tracking-tighter uppercase italic opacity-20 text-ui-accent-primary">
         {title}
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="aspect-[2/3] bg-neon-cyan/5 border border-neon-cyan/10 animate-pulse"
+            className="aspect-[2/3] bg-ui-accent-primary/5 border border-ui-border/10 animate-pulse"
           />
         ))}
       </div>
