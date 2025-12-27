@@ -124,7 +124,7 @@ async function ProfileContent() {
                         {note.title}
                       </h3>
                       <p className="opacity-60 leading-relaxed italic">
-                        "{note.content}"
+                        &quot;{note.content}&quot;
                       </p>
                     </div>
                   </div>

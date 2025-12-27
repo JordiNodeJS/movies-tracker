@@ -1,6 +1,12 @@
 import { createHmac } from "node:crypto";
 
-const SECRET_KEY = process.env.JWT_SECRET || "super-secret-key-change-this";
+const SECRET_KEY = process.env.JWT_SECRET;
+
+if (!SECRET_KEY) {
+  throw new Error(
+    "JWT_SECRET environment variable is not defined. Please set it in your .env file for security."
+  );
+}
 
 export function signJWT(payload: Record<string, any>): string {
   const header = Buffer.from(
