@@ -62,6 +62,7 @@ async function HeroSection({ locale }: { locale: string }) {
             fill
             className="object-cover scale-105 animate-pulse-slow"
             priority
+            sizes="100vw"
           />
         ) : (
           <div className="absolute inset-0 bg-indigo-500/10" />
@@ -154,7 +155,7 @@ async function RecommendationsSection({ locale }: { locale: string }) {
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-16">
         {recommendations.map((rec) => (
-          <div key={rec.id} className="space-y-4">
+          <div key={rec.movieId} className="space-y-4">
             <MovieCard
               movie={{
                 id: rec.movieId,

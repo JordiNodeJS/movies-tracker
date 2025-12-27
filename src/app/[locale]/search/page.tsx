@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Search as SearchIcon, Loader2 } from "lucide-react";
-import { searchMovies } from "@/lib/tmdb";
+import { searchMoviesAction } from "@/lib/movie-actions";
 import { MovieCard } from "@/components/movie-card";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useTranslations, useLocale } from "next-intl";
@@ -16,15 +16,23 @@ export default function SearchPage() {
   const locale = useLocale();
 
   useEffect(() => {
-    if (debouncedQuery) {
-      setIsLoading(true);
-      searchMovies(debouncedQuery, locale).then((res) => {
-        setResults(res.results);
-        setIsLoading(false);
-      });
-    } else {
-      setResults([]);
-    }
+    const performSearch = async () => {
+      if (debouncedQuery) {
+        setIsLoading(true);
+        try {
+          const data = await searchMoviesAction(debouncedQuery, locale);
+          setResults(data.results || []);
+        } catch (error) {
+          console.error("Search error:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setResults([]);
+      }
+    };
+
+    performSearch();
   }, [debouncedQuery, locale]);
 
   return (

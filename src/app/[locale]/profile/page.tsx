@@ -108,6 +108,7 @@ async function ProfileContent() {
                           alt={note.title || ""}
                           fill
                           className="object-cover"
+                          sizes="96px"
                         />
                       </div>
                     )}
@@ -140,7 +141,7 @@ async function ProfileContent() {
           <div className="space-y-4">
             {data.recommendations.map((rec) => (
               <Link
-                key={rec.id}
+                key={rec.movieId}
                 href={`/movie/${rec.movieId}`}
                 className="group block p-6 rounded-3xl bg-foreground/[0.02] border border-foreground/5 hover:border-indigo-500/30 transition-all"
               >

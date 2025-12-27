@@ -294,6 +294,13 @@ export async function fetchTMDB(
     TMDB_ACCESS_TOKEN !== "demo_token" &&
     !TMDB_ACCESS_TOKEN.startsWith("your_");
 
+  console.log("TMDB Credentials check:", {
+    hasToken: !!TMDB_ACCESS_TOKEN,
+    isDemo: TMDB_ACCESS_TOKEN === "demo_token",
+    startsWithYour: TMDB_ACCESS_TOKEN?.startsWith("your_"),
+    hasValidCredentials,
+  });
+
   // Return mock data if no valid credentials
   if (!hasValidCredentials) {
     await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate network delay
@@ -336,8 +343,6 @@ export async function fetchTMDB(
 
   return response.json();
 }
-
-import { cacheLife, cacheTag } from "next/cache";
 
 export async function getTrendingMovies(language: string = "en") {
   return fetchTMDB("/trending/movie/day", language);
