@@ -48,6 +48,9 @@
     "deleteNote": "Delete Note",
     "watchlistAdd": "Watchlist",
     "watchlistRemove": "In Watchlist",
+    "openJournal": "Open personal journal",
+    "closeJournal": "Close journal",
+    "rateMovie": "Rate movie with {rating} stars",
     "releaseDate": "Release Date",
     "noPoster": "No Poster"
   },
@@ -86,6 +89,7 @@
   },
   "Common": {
     "noPoster": "No Poster",
-    "movie": "Movie"
+    "movie": "Movie",
+    "viewDetails": "View details for"
   }
 }

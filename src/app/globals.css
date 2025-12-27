@@ -7,15 +7,28 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --color-accent: #6366f1;
-  --color-accent-foreground: #ffffff;
+  --color-accent: #00f3ff;
+  --color-accent-foreground: #050505;
 
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
+  --color-neon-cyan: #00f3ff;
+  --color-neon-magenta: #ff00ff;
+  --color-neon-yellow: #fdee00;
+
+  --color-ui-bg: var(--ui-bg);
+  --color-ui-text: var(--ui-text);
+  --color-ui-border: var(--ui-border);
+  --color-ui-accent-primary: var(--ui-accent-primary);
+  --color-ui-accent-secondary: var(--ui-accent-secondary);
+  --color-ui-accent-tertiary: var(--ui-accent-tertiary);
+  --color-ui-card-bg: var(--ui-card-bg);
+
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
 
   --animate-float: float 3s ease-in-out infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-flicker: flicker 2s linear infinite;
 
   @keyframes float {
     0%,
@@ -26,33 +39,110 @@
       transform: translateY(-10px);
     }
   }
+
+  @keyframes flicker {
+    0%,
+    19.999%,
+    22%,
+    62.999%,
+    64%,
+    64.999%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    21.999%,
+    63%,
+    63.999%,
+    65%,
+    69.999% {
+      opacity: 0.4;
+    }
+  }
 }
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #fdee00;
     --foreground: #050505;
-    --accent: 99 102 241;
+    --accent: 0 243 255;
+
+    /* Semantic UI Variables - Light Mode (High Contrast Cyber) */
+    --ui-bg: #fdee00;
+    --ui-text: #050505;
+    --ui-border: #050505;
+    --ui-accent-primary: #0066cc; /* Darker Cyan for better contrast on yellow */
+    --ui-accent-secondary: #cc0066; /* Darker Magenta */
+    --ui-accent-tertiary: #050505; /* Use black as tertiary in light mode */
+    --ui-glow: rgba(0, 102, 204, 0.3);
+    --ui-card-bg: rgba(255, 255, 255, 0.95);
+    --ui-glass-bg: rgba(253, 238, 0, 0.9);
+    --ui-glass-border: #050505;
   }
 
   .dark {
     --background: #050505;
-    --foreground: #ffffff;
+    --foreground: #00f3ff;
+    --accent: 0 243 255;
+
+    /* Semantic UI Variables - Dark Mode */
+    --ui-bg: #050505;
+    --ui-text: #00f3ff;
+    --ui-border: #00f3ff;
+    --ui-accent-primary: #00f3ff;
+    --ui-accent-secondary: #ff00ff;
+    --ui-accent-tertiary: #fdee00;
+    --ui-glow: rgba(0, 243, 255, 0.6);
+    --ui-card-bg: rgba(13, 2, 33, 0.9);
+    --ui-glass-bg: rgba(5, 5, 5, 0.8);
+    --ui-glass-border: #00f3ff;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    selection-background-color: #6366f1;
-    selection-color: #ffffff;
+    selection-background-color: var(--ui-accent-primary);
+    selection-color: var(--ui-bg);
+    background-image:
+      linear-gradient(
+        color-mix(in srgb, var(--ui-accent-primary) 10%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--ui-accent-primary) 10%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 20px 20px;
+  }
+
+  .dark body {
+    background-color: var(--ui-bg);
+    background-image:
+      linear-gradient(
+        color-mix(in srgb, var(--ui-accent-primary) 15%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--ui-accent-primary) 15%, transparent) 1px,
+        transparent 1px
+      ),
+      radial-gradient(circle at 50% 50%, #0d0221 0%, var(--ui-bg) 100%);
+    background-size:
+      40px 40px,
+      40px 40px,
+      100% 100%;
   }
 }
 
 @layer utilities {
   .glass {
-    background: color-mix(in srgb, var(--foreground) 3%, transparent);
+    background: var(--ui-glass-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+    border: 1px solid var(--ui-glass-border);
+    box-shadow: 0 0 10px var(--ui-glow);
   }
 
   .glass-hover {
@@ -60,15 +150,67 @@
   }
 
   .glass-hover:hover {
-    background: color-mix(in srgb, var(--foreground) 6%, transparent);
-    border-color: color-mix(in srgb, var(--foreground) 15%, transparent);
+    background: color-mix(in srgb, var(--ui-glass-bg) 90%, white);
+    border-color: var(--ui-accent-secondary);
+    box-shadow: 0 0 20px var(--ui-accent-secondary);
+  }
+
+  .neon-text-cyan {
+    text-shadow:
+      0 0 5px var(--ui-accent-primary),
+      0 0 10px var(--ui-accent-primary);
+  }
+
+  .neon-text-magenta {
+    text-shadow:
+      0 0 5px var(--ui-accent-secondary),
+      0 0 10px var(--ui-accent-secondary);
+  }
+
+  .neon-border-cyan {
+    box-shadow:
+      0 0 5px var(--ui-accent-primary),
+      inset 0 0 5px var(--ui-accent-primary);
+  }
+
+  .neon-border-magenta {
+    box-shadow:
+      0 0 5px var(--ui-accent-secondary),
+      inset 0 0 5px var(--ui-accent-secondary);
+  }
+
+  .scanlines {
+    position: relative;
+  }
+
+  .scanlines::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background:
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.03)
+      );
+    z-index: 2;
+    background-size:
+      100% 2px,
+      3px 100%;
+    pointer-events: none;
   }
 
   .text-gradient {
     background: linear-gradient(
       to bottom right,
-      var(--foreground),
-      color-mix(in srgb, var(--foreground) 60%, transparent)
+      var(--ui-accent-primary),
+      var(--ui-accent-secondary)
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

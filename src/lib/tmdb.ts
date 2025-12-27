@@ -1,5 +1,3 @@
-"use server";
-
 // ⚠️ CACHING STRATEGY: Time-based revalidation
 // Using default cacheLife for TMDB API data.
 // Revalidates every 15 minutes by default in Next.js 16.
@@ -290,68 +288,94 @@ export async function fetchTMDB(
   language: string = "en",
   options: RequestInit = {}
 ) {
-  "use cache";
   // Check if we have valid credentials
   const hasValidCredentials =
     TMDB_ACCESS_TOKEN &&
     TMDB_ACCESS_TOKEN !== "demo_token" &&
     !TMDB_ACCESS_TOKEN.startsWith("your_");
 
+  console.log("TMDB Credentials check:", {
+    hasToken: !!TMDB_ACCESS_TOKEN,
+    isDemo: TMDB_ACCESS_TOKEN === "demo_token",
+    startsWithYour: TMDB_ACCESS_TOKEN?.startsWith("your_"),
+    hasValidCredentials,
+  });
+
   // Return mock data if no valid credentials
   if (!hasValidCredentials) {
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate network delay
-
-    if (endpoint.includes("/trending/movie/")) {
-      return MOCK_TRENDING;
-    } else if (endpoint.includes("/movie/popular")) {
-      return MOCK_POPULAR;
-    } else if (endpoint.includes("/movie/top_rated")) {
-      return MOCK_TOP_RATED;
-    } else if (endpoint.includes("/search/movie")) {
-      return MOCK_SEARCH;
-    } else if (
-      endpoint.includes("/movie/") &&
-      !endpoint.includes("/genre/movie/list")
-    ) {
-      return MOCK_MOVIE_DETAILS;
-    } else if (endpoint.includes("/genre/movie/list")) {
-      return MOCK_GENRES;
-    }
-
-    return { results: [] };
+    return getMockData(endpoint);
   }
 
   // Use real API if credentials are valid
   const separator = endpoint.includes("?") ? "&" : "?";
   const url = `${BASE_URL}${endpoint}${separator}language=${language}`;
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
-      ...options.headers,
-    },
-  });
 
-  if (!response.ok) {
-    throw new Error(`TMDB API error: ${response.statusText}`);
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
+        ...options.headers,
+      },
+    });
+
+    if (!response.ok) {
+      console.error(
+        `TMDB API error (${response.status}): ${response.statusText} for URL: ${url}`
+      );
+
+      // If the real API fails (e.g. 401 Unauthorized), fallback to mock data
+      // instead of crashing the whole page
+      if (response.status === 401 || response.status === 403) {
+        console.warn(
+          "Falling back to mock data due to TMDB authorization error."
+        );
+        return getMockData(endpoint);
+      }
+
+      throw new Error(`TMDB API error: ${response.statusText}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Fetch error in fetchTMDB:", error);
+    // Fallback to mock data on any fetch error
+    return getMockData(endpoint);
   }
-
-  return response.json();
 }
 
-import { cacheLife, cacheTag } from "next/cache";
+/**
+ * Helper to return mock data based on endpoint
+ */
+async function getMockData(endpoint: string) {
+  await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate network delay
+
+  if (endpoint.includes("/trending/movie/")) {
+    return MOCK_TRENDING;
+  } else if (endpoint.includes("/movie/popular")) {
+    return MOCK_POPULAR;
+  } else if (endpoint.includes("/movie/top_rated")) {
+    return MOCK_TOP_RATED;
+  } else if (endpoint.includes("/search/movie")) {
+    return MOCK_SEARCH;
+  } else if (
+    endpoint.includes("/movie/") &&
+    !endpoint.includes("/genre/movie/list")
+  ) {
+    return MOCK_MOVIE_DETAILS;
+  } else if (endpoint.includes("/genre/movie/list")) {
+    return MOCK_GENRES;
+  }
+
+  return { results: [] };
+}
 
 export async function getTrendingMovies(language: string = "en") {
-  "use cache";
-  cacheLife("trending");
-  cacheTag("trending");
   return fetchTMDB("/trending/movie/day", language);
 }
 
 export async function searchMovies(query: string, language: string = "en") {
-  "use cache";
-  cacheLife("search");
   return fetchTMDB(
     `/search/movie?query=${encodeURIComponent(query)}`,
     language
@@ -362,9 +386,6 @@ export async function getMovieDetails(
   movieId: number,
   language: string = "en"
 ) {
-  "use cache";
-  cacheLife("movie");
-  cacheTag(`movie-${movieId}`);
   return fetchTMDB(
     `/movie/${movieId}?append_to_response=videos,credits,recommendations`,
     language
@@ -372,7 +393,5 @@ export async function getMovieDetails(
 }
 
 export async function getGenres(language: string = "en") {
-  "use cache";
-  cacheLife("genres");
   return fetchTMDB("/genre/movie/list", language);
 }
