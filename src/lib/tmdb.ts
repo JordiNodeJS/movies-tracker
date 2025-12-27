@@ -303,45 +303,72 @@ export async function fetchTMDB(
 
   // Return mock data if no valid credentials
   if (!hasValidCredentials) {
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate network delay
-
-    if (endpoint.includes("/trending/movie/")) {
-      return MOCK_TRENDING;
-    } else if (endpoint.includes("/movie/popular")) {
-      return MOCK_POPULAR;
-    } else if (endpoint.includes("/movie/top_rated")) {
-      return MOCK_TOP_RATED;
-    } else if (endpoint.includes("/search/movie")) {
-      return MOCK_SEARCH;
-    } else if (
-      endpoint.includes("/movie/") &&
-      !endpoint.includes("/genre/movie/list")
-    ) {
-      return MOCK_MOVIE_DETAILS;
-    } else if (endpoint.includes("/genre/movie/list")) {
-      return MOCK_GENRES;
-    }
-
-    return { results: [] };
+    return getMockData(endpoint);
   }
 
   // Use real API if credentials are valid
   const separator = endpoint.includes("?") ? "&" : "?";
   const url = `${BASE_URL}${endpoint}${separator}language=${language}`;
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
-      ...options.headers,
-    },
-  });
 
-  if (!response.ok) {
-    throw new Error(`TMDB API error: ${response.statusText}`);
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
+        ...options.headers,
+      },
+    });
+
+    if (!response.ok) {
+      console.error(
+        `TMDB API error (${response.status}): ${response.statusText} for URL: ${url}`
+      );
+
+      // If the real API fails (e.g. 401 Unauthorized), fallback to mock data
+      // instead of crashing the whole page
+      if (response.status === 401 || response.status === 403) {
+        console.warn(
+          "Falling back to mock data due to TMDB authorization error."
+        );
+        return getMockData(endpoint);
+      }
+
+      throw new Error(`TMDB API error: ${response.statusText}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Fetch error in fetchTMDB:", error);
+    // Fallback to mock data on any fetch error
+    return getMockData(endpoint);
+  }
+}
+
+/**
+ * Helper to return mock data based on endpoint
+ */
+async function getMockData(endpoint: string) {
+  await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate network delay
+
+  if (endpoint.includes("/trending/movie/")) {
+    return MOCK_TRENDING;
+  } else if (endpoint.includes("/movie/popular")) {
+    return MOCK_POPULAR;
+  } else if (endpoint.includes("/movie/top_rated")) {
+    return MOCK_TOP_RATED;
+  } else if (endpoint.includes("/search/movie")) {
+    return MOCK_SEARCH;
+  } else if (
+    endpoint.includes("/movie/") &&
+    !endpoint.includes("/genre/movie/list")
+  ) {
+    return MOCK_MOVIE_DETAILS;
+  } else if (endpoint.includes("/genre/movie/list")) {
+    return MOCK_GENRES;
   }
 
-  return response.json();
+  return { results: [] };
 }
 
 export async function getTrendingMovies(language: string = "en") {
