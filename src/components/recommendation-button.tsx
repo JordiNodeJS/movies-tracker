@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { generateRecommendations } from "@/lib/recommendation-actions";
-import { useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations, useLocale } from "next-intl";
 
 export function RecommendationButton() {

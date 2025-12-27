@@ -2,7 +2,7 @@ import { getProfileData } from "@/lib/actions";
 import { prisma } from "@/lib/prisma";
 import { Star, MessageSquare, Quote, Bookmark, Loader2 } from "lucide-react";
 import { RecommendationButton } from "@/components/recommendation-button";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";

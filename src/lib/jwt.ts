@@ -1,16 +1,23 @@
 import { SignJWT, jwtVerify } from "jose";
 
-const SECRET_KEY = process.env.JWT_SECRET;
-
-if (!SECRET_KEY) {
-  throw new Error(
-    "JWT_SECRET environment variable is not defined. Please set it in your .env file for security."
-  );
+/**
+ * Gets the JWT secret as a Uint8Array.
+ * Returns null if the secret is not defined.
+ */
+function getSecret() {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    return null;
+  }
+  return new TextEncoder().encode(secret);
 }
 
-const secret = new TextEncoder().encode(SECRET_KEY);
-
 export async function signJWT(payload: Record<string, any>): Promise<string> {
+  const secret = getSecret();
+  if (!secret) {
+    throw new Error("JWT_SECRET environment variable is not defined.");
+  }
+
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -21,10 +28,19 @@ export async function signJWT(payload: Record<string, any>): Promise<string> {
 export async function verifyJWT(
   token: string
 ): Promise<Record<string, any> | null> {
+  if (!token) return null;
+
+  const secret = getSecret();
+  if (!secret) {
+    console.error("JWT_SECRET is not defined in environment variables");
+    return null;
+  }
+
   try {
     const { payload } = await jwtVerify(token, secret);
     return payload;
   } catch (e) {
+    // Token is invalid, expired, or malformed
     return null;
   }
 }
