@@ -5,7 +5,10 @@ import pg from "pg";
 const prismaClientSingleton = () => {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
-    throw new Error("DATABASE_URL is not set");
+    console.warn(
+      "DATABASE_URL is not set. Prisma client will be initialized without a connection string."
+    );
+    return new PrismaClient();
   }
 
   const pool = new pg.Pool({
