@@ -39,19 +39,19 @@ export default function SearchPage() {
     <div className="max-w-7xl mx-auto px-6 py-32 space-y-20">
       <section className="max-w-4xl mx-auto text-center space-y-8">
         <h1 className="text-6xl font-black tracking-tighter uppercase">
-          {t("title")} <span className="text-indigo-500">{t("obsession")}</span>
+          {t("title")} <span className="text-accent">{t("obsession")}</span>
         </h1>
         <div className="relative group">
-          <SearchIcon className="absolute left-8 top-1/2 -translate-y-1/2 opacity-20 w-8 h-8 group-focus-within:text-indigo-500 group-focus-within:opacity-100 transition-all" />
+          <SearchIcon className="absolute left-8 top-1/2 -translate-y-1/2 opacity-20 w-8 h-8 group-focus-within:text-accent group-focus-within:opacity-100 transition-all" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("placeholder")}
-            className="w-full bg-foreground/5 border border-foreground/10 rounded-[2rem] py-8 pl-20 pr-10 text-2xl font-bold focus:outline-none focus:border-indigo-500/50 focus:bg-foreground/[0.07] transition-all shadow-2xl placeholder:opacity-10"
+            className="w-full bg-foreground/5 border border-foreground/10 rounded-[2rem] py-8 pl-20 pr-10 text-2xl font-bold focus:outline-none focus:border-accent/50 focus:bg-foreground/[0.07] transition-all shadow-2xl placeholder:opacity-10"
           />
           {isLoading && (
-            <Loader2 className="absolute right-8 top-1/2 -translate-y-1/2 text-indigo-500 w-8 h-8 animate-spin" />
+            <Loader2 className="absolute right-8 top-1/2 -translate-y-1/2 text-accent w-8 h-8 animate-spin" />
           )}
         </div>
       </section>

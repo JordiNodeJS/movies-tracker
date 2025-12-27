@@ -23,7 +23,7 @@ export default async function WatchlistPage({
             {t("title")}
           </h1>
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-indigo-500" />
+            <div className="h-[1px] w-12 bg-accent" />
             <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>

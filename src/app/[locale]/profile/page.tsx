@@ -31,7 +31,7 @@ async function ProfileContent() {
     <div className="space-y-20">
       <header className="flex items-center gap-10">
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+          <div className="absolute -inset-1 bg-gradient-to-r from-accent to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
           <div className="relative w-32 h-32 rounded-full bg-background border border-foreground/10 flex items-center justify-center text-5xl font-black tracking-tighter">
             J
           </div>
@@ -41,7 +41,7 @@ async function ProfileContent() {
             JORDI
           </h1>
           <div className="flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-indigo-500" />
+            <div className="h-[1px] w-12 bg-accent" />
             <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>
@@ -50,7 +50,7 @@ async function ProfileContent() {
       </header>
 
       <section className="relative overflow-hidden bg-foreground/[0.02] border border-foreground/5 rounded-[3rem] p-12 space-y-10">
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-indigo-500/10 blur-[120px] rounded-full" />
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-accent/10 blur-[120px] rounded-full" />
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
@@ -99,7 +99,7 @@ async function ProfileContent() {
                   key={note.id}
                   className="group relative p-10 rounded-[2.5rem] bg-foreground/[0.02] border border-foreground/5 hover:bg-foreground/[0.04] transition-all"
                 >
-                  <Quote className="absolute top-6 right-10 w-12 h-12 opacity-[0.03] group-hover:text-indigo-500/10 transition-colors" />
+                  <Quote className="absolute top-6 right-10 w-12 h-12 opacity-[0.03] group-hover:text-accent/10 transition-colors" />
                   <div className="flex gap-8">
                     {note.posterPath && (
                       <div className="relative w-24 aspect-[2/3] rounded-xl overflow-hidden border border-foreground/10 shrink-0">
@@ -143,14 +143,14 @@ async function ProfileContent() {
               <Link
                 key={rec.movieId}
                 href={`/movie/${rec.movieId}`}
-                className="group block p-6 rounded-3xl bg-foreground/[0.02] border border-foreground/5 hover:border-indigo-500/30 transition-all"
+                className="group block p-6 rounded-3xl bg-foreground/[0.02] border border-foreground/5 hover:border-accent/30 transition-all"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 font-black">
+                  <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent font-black">
                     {rec.score.toFixed(1)}
                   </div>
                   <div>
-                    <h4 className="font-black uppercase tracking-tight group-hover:text-indigo-400 transition-colors">
+                    <h4 className="font-black uppercase tracking-tight group-hover:text-accent transition-colors">
                       {rec.title}
                     </h4>
                     <p className="text-[10px] opacity-40 uppercase tracking-widest font-bold">
@@ -181,7 +181,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
 function ProfileSkeleton() {
   return (
     <div className="flex items-center justify-center h-96">
-      <Loader2 className="w-12 h-12 text-indigo-500 animate-spin" />
+      <Loader2 className="w-12 h-12 text-accent animate-spin" />
     </div>
   );
 }

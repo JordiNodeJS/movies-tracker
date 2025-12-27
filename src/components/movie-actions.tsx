@@ -86,7 +86,7 @@ export function MovieActions({
           className={cn(
             "flex items-center justify-center gap-4 py-6 rounded-[2rem] font-black uppercase tracking-[0.2em] text-[10px] transition-all duration-500 group",
             data.isInWatchlist
-              ? "bg-indigo-600 text-white shadow-[0_20px_50px_rgba(79,70,229,0.3)] border-transparent"
+              ? "bg-accent text-white shadow-[0_20px_50px_rgba(124,58,237,0.3)] border-transparent"
               : "bg-foreground/5 opacity-40 hover:opacity-100 hover:bg-foreground/10 border border-foreground/10"
           )}
         >
@@ -104,7 +104,7 @@ export function MovieActions({
           className={cn(
             "w-20 h-20 rounded-[2rem] flex items-center justify-center transition-all duration-500 group",
             data.note
-              ? "bg-indigo-500/10 text-indigo-500 border border-indigo-500/20"
+              ? "bg-accent/10 text-accent border border-accent/20"
               : "bg-foreground/5 opacity-40 hover:opacity-100 hover:bg-foreground/10 border border-foreground/10"
           )}
         >
@@ -117,7 +117,7 @@ export function MovieActions({
           <span className="text-[10px] font-black opacity-20 uppercase tracking-[0.3em]">
             {t("yourRating")}
           </span>
-          <span className="text-2xl font-black text-indigo-500">
+          <span className="text-2xl font-black text-accent">
             {data.rating > 0 ? `${data.rating}/10` : "--"}
           </span>
         </div>
@@ -129,7 +129,7 @@ export function MovieActions({
               className={cn(
                 "w-full aspect-square rounded-lg text-[10px] font-black transition-all",
                 data.rating >= val
-                  ? "bg-indigo-600 text-white"
+                  ? "bg-accent text-white"
                   : "bg-foreground/5 opacity-20 hover:opacity-40 hover:bg-foreground/10"
               )}
             >
@@ -168,7 +168,7 @@ export function MovieActions({
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
                 placeholder={t("journalPlaceholder")}
-                className="w-full h-64 bg-foreground/5 border border-foreground/10 rounded-3xl p-8 text-xl font-medium focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:opacity-5"
+                className="w-full h-64 bg-foreground/5 border border-foreground/10 rounded-3xl p-8 text-xl font-medium focus:outline-none focus:border-accent/50 transition-all resize-none placeholder:opacity-5"
               />
 
               <div className="flex items-center justify-between gap-4">
