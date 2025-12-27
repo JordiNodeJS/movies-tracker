@@ -1,4 +1,4 @@
-import { createHmac } from "node:crypto";
+import { SignJWT, jwtVerify } from "jose";
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -8,31 +8,22 @@ if (!SECRET_KEY) {
   );
 }
 
-export function signJWT(payload: Record<string, any>): string {
-  const header = Buffer.from(
-    JSON.stringify({ alg: "HS256", typ: "JWT" })
-  ).toString("base64url");
-  const body = Buffer.from(
-    JSON.stringify({ ...payload, iat: Date.now() })
-  ).toString("base64url");
-  const signature = createHmac("sha256", SECRET_KEY as string)
-    .update(`${header}.${body}`)
-    .digest("base64url");
-  return `${header}.${body}.${signature}`;
+const secret = new TextEncoder().encode(SECRET_KEY);
+
+export async function signJWT(payload: Record<string, any>): Promise<string> {
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("7d")
+    .sign(secret);
 }
 
-export function verifyJWT(token: string): Record<string, any> | null {
+export async function verifyJWT(
+  token: string
+): Promise<Record<string, any> | null> {
   try {
-    const [header, body, signature] = token.split(".");
-    if (!header || !body || !signature) return null;
-
-    const expectedSignature = createHmac("sha256", SECRET_KEY as string)
-      .update(`${header}.${body}`)
-      .digest("base64url");
-
-    if (signature !== expectedSignature) return null;
-
-    return JSON.parse(Buffer.from(body, "base64url").toString());
+    const { payload } = await jwtVerify(token, secret);
+    return payload;
   } catch (e) {
     return null;
   }
