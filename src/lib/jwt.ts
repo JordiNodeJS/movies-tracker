@@ -15,7 +15,7 @@ export function signJWT(payload: Record<string, any>): string {
   const body = Buffer.from(
     JSON.stringify({ ...payload, iat: Date.now() })
   ).toString("base64url");
-  const signature = createHmac("sha256", SECRET_KEY)
+  const signature = createHmac("sha256", SECRET_KEY as string)
     .update(`${header}.${body}`)
     .digest("base64url");
   return `${header}.${body}.${signature}`;
@@ -26,7 +26,7 @@ export function verifyJWT(token: string): Record<string, any> | null {
     const [header, body, signature] = token.split(".");
     if (!header || !body || !signature) return null;
 
-    const expectedSignature = createHmac("sha256", SECRET_KEY)
+    const expectedSignature = createHmac("sha256", SECRET_KEY as string)
       .update(`${header}.${body}`)
       .digest("base64url");
 
