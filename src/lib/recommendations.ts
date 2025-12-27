@@ -1,14 +1,18 @@
-"use server";
-
 import { prisma } from "@/lib/prisma";
 import { fetchTMDB } from "@/lib/tmdb";
 import { cacheLife, cacheTag } from "next/cache";
 
-const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
+const MOCK_USER_ID = "demo-user-001";
 
 export async function generateRecommendations(language: string = "en") {
-  "use cache";
-  cacheTag("recommendations");
+  const allUsers = await prisma.user.findMany();
+  console.log(
+    "All users in DB:",
+    allUsers.map((u) => u.id)
+  );
+
+  const user = await prisma.user.findUnique({ where: { id: MOCK_USER_ID } });
+  console.log("User found in generateRecommendations:", user);
   // 1. Get user's high rated movies (8+) for genre preference
   const highRated = await prisma.rating.findMany({
     where: { userId: MOCK_USER_ID, value: { gte: 8 } },
@@ -141,6 +145,10 @@ export async function generateRecommendations(language: string = "en") {
 }
 
 export async function getRecommendations() {
+  console.log(
+    "getRecommendations called, prisma adapter is:",
+    (prisma as any)._adapter ? "present" : "missing"
+  );
   const recs = await prisma.recommendation.findMany({
     where: { userId: MOCK_USER_ID },
     orderBy: { score: "desc" },

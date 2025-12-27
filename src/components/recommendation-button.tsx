@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { generateRecommendations } from "@/lib/recommendations";
+import { generateRecommendations } from "@/lib/recommendation-actions";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
 

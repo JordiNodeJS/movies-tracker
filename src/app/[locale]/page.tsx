@@ -136,53 +136,39 @@ async function TrendingSection({ locale }: { locale: string }) {
 }
 
 async function RecommendationsSection({ locale }: { locale: string }) {
-  await connection();
   const recommendations = await getRecommendations();
   const t = await getTranslations("Home");
 
   if (recommendations.length === 0) return null;
 
-  const isPersonalized = recommendations.some(
-    (rec: any) => rec.reason === "Based on your favorite genres"
-  );
-
-  const movies = recommendations.map((rec: any) => ({
-    id: rec.movieId,
-    title: rec.title,
-    poster_path: rec.posterPath,
-    vote_average: rec.voteAverage,
-  }));
-
   return (
-    <section>
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-        <div className="space-y-6">
-          <div className="flex items-center gap-4">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
-              {isPersonalized ? t("forYou") : t("discover")}
-            </h2>
-            {isPersonalized && (
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
-                <Sparkles className="w-3 h-3" />
-                <span className="text-[10px] font-black uppercase tracking-widest">
-                  AI
-                </span>
-              </div>
-            )}
-          </div>
+    <section className="space-y-16">
+      <div className="flex items-end justify-between mb-16">
+        <div>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none">
+            {t("forYou")}
+          </h2>
           <div className="h-2 w-24 bg-indigo-600" />
-          {!isPersonalized && (
-            <p className="text-white/40 font-medium uppercase tracking-[0.2em] text-[10px] max-w-md leading-relaxed text-balance">
-              {t("discoverSubtitle")}
-            </p>
-          )}
         </div>
-        <RecommendationInfo />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-16">
-        {movies.map((movie: any) => (
-          <MovieCard key={movie.id} movie={movie} />
+        {recommendations.map((rec) => (
+          <div key={rec.id} className="space-y-4">
+            <MovieCard
+              movie={{
+                id: rec.movieId,
+                title: rec.title,
+                poster_path: rec.posterPath,
+                vote_average: rec.voteAverage,
+                release_date: "",
+                overview: "",
+                backdrop_path: "",
+                media_type: "movie",
+              }}
+            />
+            <RecommendationInfo reason={rec.reason} score={rec.score} />
+          </div>
         ))}
       </div>
     </section>
