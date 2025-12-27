@@ -1,5 +1,5 @@
 import { login } from "@/lib/auth-actions";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 
 export default function LoginPage() {
   return (

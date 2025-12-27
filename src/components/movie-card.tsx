@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { Star } from "lucide-react";
 import type { Movie } from "@/lib/tmdb";
 import { useTranslations } from "next-intl";

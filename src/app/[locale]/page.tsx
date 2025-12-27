@@ -5,7 +5,7 @@ import { RecommendationInfo } from "@/components/recommendation-info";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { Play, Info, Sparkles } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 

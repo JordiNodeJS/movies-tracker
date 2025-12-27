@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { Film, Search, Bookmark, User, LogOut, LogIn } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { LanguageSwitcher } from "./language-switcher";
