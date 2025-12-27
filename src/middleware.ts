@@ -5,7 +5,7 @@ import { verifyJWT } from "./lib/jwt";
 
 const intlMiddleware = createMiddleware(routing);
 
-export function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const response = intlMiddleware(request);
 
   const token = request.cookies.get("auth_token")?.value;
@@ -15,7 +15,7 @@ export function proxy(request: NextRequest) {
 
   let isAuthenticated = false;
   if (token) {
-    const payload = verifyJWT(token);
+    const payload = await verifyJWT(token);
     if (payload) isAuthenticated = true;
   }
 

@@ -47,7 +47,7 @@ export async function login(formData: FormData) {
     throw new Error("Invalid credentials");
   }
 
-  const token = signJWT({ userId: user.id, email: user.email });
+  const token = await signJWT({ userId: user.id, email: user.email });
 
   const cookieStore = await cookies();
   cookieStore.set("auth_token", token, {

@@ -14,7 +14,7 @@ export async function ensureUser() {
 
   if (!token) throw new Error("Unauthorized");
 
-  const payload = verifyJWT(token);
+  const payload = await verifyJWT(token);
   if (!payload || !payload.userId) throw new Error("Unauthorized");
 
   const user = await prisma.user.findUnique({ where: { id: payload.userId } });
