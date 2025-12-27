@@ -57,6 +57,7 @@ export function LanguageSwitcher() {
         )}
         aria-expanded={isOpen}
         aria-haspopup="true"
+        aria-label="Select Language"
       >
         <Globe className="w-4 h-4 text-ui-accent-primary" />
         <span className="text-xs font-black uppercase tracking-widest">

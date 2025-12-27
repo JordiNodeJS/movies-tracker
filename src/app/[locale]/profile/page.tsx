@@ -49,7 +49,7 @@ async function ProfileContent() {
           </h1>
           <div className="flex items-center justify-center sm:justify-start gap-4">
             <div className="h-[1px] w-12 bg-ui-accent-primary" />
-            <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
+            <p className="opacity-80 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>
           </div>
@@ -64,7 +64,7 @@ async function ProfileContent() {
             <h2 className="text-4xl font-black tracking-tighter uppercase">
               {t("engineTitle")}
             </h2>
-            <p className="opacity-40 font-medium text-lg max-w-xl">
+            <p className="opacity-80 font-medium text-lg max-w-xl">
               {t("engineDescription")}
             </p>
           </div>

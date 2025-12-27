@@ -88,7 +88,7 @@ async function HeroSection({ locale }: { locale: string }) {
             {featured.title}
           </h1>
 
-          <p className="text-xl text-ui-accent-primary/60 max-w-xl leading-relaxed font-black text-balance uppercase tracking-tight">
+          <p className="text-xl text-ui-accent-primary/80 max-w-xl leading-relaxed font-black text-balance uppercase tracking-tight line-clamp-4">
             {featured.overview}
           </p>
 

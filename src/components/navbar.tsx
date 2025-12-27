@@ -15,7 +15,11 @@ export async function Navbar() {
     <>
       <nav className="sticky top-0 z-50 w-full border-b-2 border-ui-border bg-ui-bg/80 backdrop-blur-2xl scanlines">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link
+            href="/"
+            className="flex items-center gap-3 group"
+            aria-label="MoviesTracker Home"
+          >
             <div className="w-10 h-10 bg-ui-accent-primary flex items-center justify-center group-hover:skew-x-12 transition-transform duration-500 shadow-[0_0_15px_var(--ui-accent-primary)]">
               <Film className="w-6 h-6 text-black" />
             </div>
@@ -153,7 +157,7 @@ function MobileNavLink({
   return (
     <Link
       href={href}
-      className="flex flex-col items-center gap-1 text-ui-accent-primary/60 hover:text-ui-accent-primary transition-all"
+      className="flex flex-col items-center gap-1 text-ui-accent-primary/80 hover:text-ui-accent-primary transition-all"
     >
       {icon}
       <span className="text-[8px] font-black uppercase tracking-widest">

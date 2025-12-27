@@ -125,7 +125,7 @@ async function MovieContent({
                 </h1>
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-ui-accent-primary/40 font-black uppercase tracking-[0.2em] text-[10px] sm:text-xs">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-ui-accent-primary/80 font-black uppercase tracking-[0.2em] text-[10px] sm:text-xs">
                 <div className="flex items-center gap-2">
                   <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-ui-accent-primary" />
                   <span>{t("minutes", { count: movie.runtime })}</span>
@@ -135,7 +135,7 @@ async function MovieContent({
                   <span>{new Date(movie.release_date).getFullYear()}</span>
                 </div>
                 {movie.tagline && (
-                  <div className="flex items-center gap-2 italic text-ui-accent-secondary/60 normal-case tracking-normal font-black">
+                  <div className="flex items-center gap-2 italic text-ui-accent-secondary/80 normal-case tracking-normal font-black">
                     <Quote className="w-2 h-2 sm:w-3 sm:h-3" />
                     <span className="text-[10px] sm:text-xs">
                       {movie.tagline}
@@ -204,10 +204,10 @@ async function MovieContent({
 function InfoItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="space-y-2">
-      <span className="text-[10px] font-black text-ui-accent-primary/30 uppercase tracking-widest">
+      <span className="text-[10px] font-black text-ui-accent-primary/60 uppercase tracking-widest">
         {label}
       </span>
-      <p className="text-sm md:text-base font-black text-ui-accent-primary/80 uppercase tracking-tight italic">
+      <p className="text-sm md:text-base font-black text-ui-accent-primary/90 uppercase tracking-tight italic">
         {value}
       </p>
     </div>

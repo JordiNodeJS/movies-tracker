@@ -48,6 +48,9 @@
     "deleteNote": "Eliminar Nota",
     "watchlistAdd": "Lista de Seguimiento",
     "watchlistRemove": "En la Lista",
+    "openJournal": "Abrir diario personal",
+    "closeJournal": "Cerrar diario",
+    "rateMovie": "Puntuar película con {rating} estrellas",
     "releaseDate": "Fecha de Estreno",
     "noPoster": "Sin Póster"
   },
@@ -86,6 +89,7 @@
   },
   "Common": {
     "noPoster": "Sin Póster",
-    "movie": "Película"
+    "movie": "Película",
+    "viewDetails": "Ver detalles de"
   }
 }
