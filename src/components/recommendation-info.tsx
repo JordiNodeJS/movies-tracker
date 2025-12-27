@@ -10,22 +10,22 @@ export function RecommendationInfo() {
 
   const steps = [
     {
-      icon: <Star className="w-4 h-4 text-yellow-500" />,
+      icon: <Star className="w-4 h-4 text-neon-yellow" />,
       title: t("step1Title"),
       description: t("step1Desc"),
     },
     {
-      icon: <Sparkles className="w-4 h-4 text-accent" />,
+      icon: <Sparkles className="w-4 h-4 text-neon-cyan" />,
       title: t("step2Title"),
       description: t("step2Desc"),
     },
     {
-      icon: <Filter className="w-4 h-4 text-emerald-500" />,
+      icon: <Filter className="w-4 h-4 text-neon-magenta" />,
       title: t("step3Title"),
       description: t("step3Desc"),
     },
     {
-      icon: <Zap className="w-4 h-4 text-orange-500" />,
+      icon: <Zap className="w-4 h-4 text-neon-yellow" />,
       title: t("step4Title"),
       description: t("step4Desc"),
     },
@@ -35,10 +35,10 @@ export function RecommendationInfo() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 border border-foreground/10 hover:bg-foreground/10 transition-all group"
+        className="flex items-center gap-2 px-4 py-2 border border-neon-cyan/30 bg-background/40 hover:border-neon-cyan hover:shadow-[0_0_10px_rgba(0,243,255,0.3)] transition-all group"
       >
-        <Info className="w-4 h-4 text-accent group-hover:rotate-12 transition-transform" />
-        <span className="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100">
+        <Info className="w-4 h-4 text-neon-cyan group-hover:skew-x-12 transition-transform" />
+        <span className="text-[10px] font-black uppercase tracking-widest text-neon-cyan/50 group-hover:text-neon-cyan">
           {t("howItWorks")}
         </span>
       </button>
@@ -46,17 +46,18 @@ export function RecommendationInfo() {
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-background/60 backdrop-blur-sm"
+            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm scanlines"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 mt-4 w-80 z-50 bg-background border border-foreground/10 rounded-3xl p-8 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className="absolute right-0 mt-4 w-80 z-50 bg-background border-2 border-neon-cyan p-8 shadow-[0_0_30px_rgba(0,243,255,0.2)] animate-in fade-in slide-in-from-top-4 duration-300 scanlines">
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-xl font-black tracking-tighter uppercase">
-                {t("title")} <span className="text-accent">{t("ia")}</span>
+              <h3 className="text-xl font-black tracking-tighter uppercase italic text-neon-cyan neon-text-cyan">
+                {t("title")}{" "}
+                <span className="text-neon-magenta">{t("ia")}</span>
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-foreground/5 rounded-full transition-colors"
+                className="p-2 hover:bg-neon-cyan/10 text-neon-cyan transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -67,10 +68,10 @@ export function RecommendationInfo() {
                 <div key={i} className="flex gap-4">
                   <div className="mt-1">{step.icon}</div>
                   <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest mb-1 opacity-90">
+                    <h4 className="text-[10px] font-black uppercase tracking-widest mb-1 text-neon-cyan">
                       {step.title}
                     </h4>
-                    <p className="text-xs opacity-40 leading-relaxed">
+                    <p className="text-xs text-neon-cyan/40 leading-relaxed font-bold">
                       {step.description}
                     </p>
                   </div>
@@ -78,8 +79,8 @@ export function RecommendationInfo() {
               ))}
             </div>
 
-            <div className="mt-8 pt-8 border-t border-foreground/5">
-              <p className="text-[9px] font-medium opacity-20 uppercase tracking-[0.2em] leading-relaxed">
+            <div className="mt-8 pt-8 border-t border-neon-cyan/20">
+              <p className="text-[9px] font-black text-neon-cyan/20 uppercase tracking-[0.2em] leading-relaxed">
                 {t("footer")}
               </p>
             </div>

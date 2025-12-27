@@ -28,7 +28,7 @@ export function RecommendationButton() {
     <button
       onClick={handleRefresh}
       disabled={isGenerating}
-      className="px-4 py-2 bg-foreground text-background text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all disabled:opacity-50"
+      className="px-6 py-3 border-2 border-neon-cyan text-neon-cyan text-xs font-black uppercase tracking-[0.2em] hover:bg-neon-cyan hover:text-black hover:shadow-[0_0_20px_rgba(0,243,255,0.5)] transition-all disabled:opacity-50 italic"
     >
       {isGenerating
         ? t("processing")

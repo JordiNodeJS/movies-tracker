@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Avant-Garde Movie Tracker",
-  description: "High-performance movie tracking with Next.js 16 and Neon",
+  title: "Cyberpunk Movie Tracker",
+  description: "High-tech movie tracking with Next.js 16 and Neon",
 };
 
 export function generateStaticParams() {

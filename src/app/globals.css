@@ -7,15 +7,20 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --color-accent: #7c3aed;
-  --color-accent-foreground: #ffffff;
+  --color-accent: #00f3ff;
+  --color-accent-foreground: #050505;
 
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
+  --color-neon-cyan: #00f3ff;
+  --color-neon-magenta: #ff00ff;
+  --color-neon-yellow: #fdee00;
+
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
 
   --animate-float: float 3s ease-in-out infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-flicker: flicker 2s linear infinite;
 
   @keyframes float {
     0%,
@@ -26,33 +31,72 @@
       transform: translateY(-10px);
     }
   }
+
+  @keyframes flicker {
+    0%,
+    19.999%,
+    22%,
+    62.999%,
+    64%,
+    64.999%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    21.999%,
+    63%,
+    63.999%,
+    65%,
+    69.999% {
+      opacity: 0.4;
+    }
+  }
 }
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #fdee00;
     --foreground: #050505;
-    --accent: 124 58 237;
+    --accent: 0 243 255;
   }
 
   .dark {
     --background: #050505;
-    --foreground: #ffffff;
+    --foreground: #00f3ff;
+    --accent: 0 243 255;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    selection-background-color: #7c3aed;
-    selection-color: #ffffff;
+    selection-background-color: #00f3ff;
+    selection-color: #050505;
+    background-image:
+      linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .dark body {
+    background-color: #050505;
+    background-image:
+      linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, #0d0221 0%, #050505 100%);
+    background-size:
+      40px 40px,
+      40px 40px,
+      100% 100%;
   }
 }
 
 @layer utilities {
   .glass {
-    background: color-mix(in srgb, var(--foreground) 5%, transparent);
+    background: color-mix(in srgb, var(--background) 80%, transparent);
     backdrop-filter: blur(12px);
-    border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+    border: 1px solid var(--color-neon-cyan);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
   }
 
   .glass-hover {
@@ -60,15 +104,68 @@
   }
 
   .glass-hover:hover {
-    background: color-mix(in srgb, var(--foreground) 6%, transparent);
-    border-color: color-mix(in srgb, var(--foreground) 15%, transparent);
+    background: color-mix(in srgb, var(--background) 90%, transparent);
+    border-color: var(--color-neon-magenta);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+  }
+
+  .neon-text-cyan {
+    text-shadow:
+      0 0 5px #00f3ff,
+      0 0 10px #00f3ff;
+  }
+
+  .neon-text-magenta {
+    text-shadow:
+      0 0 5px #ff00ff,
+      0 0 10px #ff00ff;
+  }
+
+  .neon-border-cyan {
+    box-shadow:
+      0 0 5px #00f3ff,
+      inset 0 0 5px #00f3ff;
+  }
+
+  .neon-border-magenta {
+    box-shadow:
+      0 0 5px #ff00ff,
+      inset 0 0 5px #ff00ff;
+  }
+
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanlines::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background:
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 2;
+    background-size:
+      100% 2px,
+      3px 100%;
+    pointer-events: none;
   }
 
   .text-gradient {
     background: linear-gradient(
       to bottom right,
-      var(--foreground),
-      color-mix(in srgb, var(--foreground) 60%, transparent)
+      var(--color-neon-cyan),
+      var(--color-neon-magenta)
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
