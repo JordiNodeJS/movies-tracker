@@ -36,9 +36,10 @@ export function RecommendationInfo() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-4 py-2 border border-ui-border/30 bg-ui-bg/40 hover:border-ui-accent-primary hover:shadow-[0_0_10px_var(--ui-glow)] transition-all group"
+        aria-label={t("howItWorks")}
       >
         <Info className="w-4 h-4 text-ui-accent-primary group-hover:skew-x-12 transition-transform" />
-        <span className="text-[10px] font-black uppercase tracking-widest text-ui-accent-primary/50 group-hover:text-ui-accent-primary">
+        <span className="text-[10px] font-black uppercase tracking-widest text-ui-accent-primary/70 group-hover:text-ui-accent-primary">
           {t("howItWorks")}
         </span>
       </button>
@@ -58,6 +59,7 @@ export function RecommendationInfo() {
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 hover:bg-ui-accent-primary/10 text-ui-accent-primary transition-colors"
+                aria-label="Close"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -71,7 +73,7 @@ export function RecommendationInfo() {
                     <h4 className="text-[10px] font-black uppercase tracking-widest mb-1 text-ui-accent-primary">
                       {step.title}
                     </h4>
-                    <p className="text-xs text-ui-accent-primary/40 leading-relaxed font-bold">
+                    <p className="text-xs text-ui-accent-primary/80 leading-relaxed font-bold">
                       {step.description}
                     </p>
                   </div>
@@ -80,7 +82,7 @@ export function RecommendationInfo() {
             </div>
 
             <div className="mt-8 pt-8 border-t border-ui-border/20">
-              <p className="text-[9px] font-black text-ui-accent-primary/20 uppercase tracking-[0.2em] leading-relaxed">
+              <p className="text-[9px] font-black text-ui-accent-primary/60 uppercase tracking-[0.2em] leading-relaxed">
                 {t("footer")}
               </p>
             </div>

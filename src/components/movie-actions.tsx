@@ -101,6 +101,7 @@ export function MovieActions({
 
         <button
           onClick={() => setIsNoteOpen(true)}
+          aria-label={t("openJournal")}
           className={cn(
             "w-20 h-20 flex items-center justify-center border-2 transition-all duration-500 group",
             data.note
@@ -126,6 +127,7 @@ export function MovieActions({
             <button
               key={val}
               onClick={() => handleSaveRating(val)}
+              aria-label={t("rateMovie", { rating: val })}
               className={cn(
                 "w-full aspect-square text-[10px] font-black transition-all border",
                 data.rating >= val
@@ -158,6 +160,7 @@ export function MovieActions({
                 </div>
                 <button
                   onClick={() => setIsNoteOpen(false)}
+                  aria-label={t("closeJournal")}
                   className="w-12 h-12 bg-ui-accent-secondary/10 border border-ui-accent-secondary/30 text-ui-accent-secondary flex items-center justify-center hover:bg-ui-accent-secondary hover:text-black transition-colors"
                 >
                   <X className="w-5 h-5" />

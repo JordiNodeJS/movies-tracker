@@ -12,7 +12,7 @@ export default function LoginPage() {
           <h1 className="text-5xl font-black tracking-tighter uppercase italic">
             Login
           </h1>
-          <p className="text-[10px] font-black opacity-20 uppercase tracking-[0.3em]">
+          <p className="text-[10px] font-black opacity-80 uppercase tracking-[0.3em]">
             Welcome back to the obsession
           </p>
         </div>
@@ -21,7 +21,7 @@ export default function LoginPage() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="email"
-              className="text-[10px] font-black uppercase tracking-widest opacity-40 ml-4"
+              className="text-[10px] font-black uppercase tracking-widest opacity-60 ml-4"
             >
               Email
             </label>
@@ -36,7 +36,7 @@ export default function LoginPage() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="password"
-              className="text-[10px] font-black uppercase tracking-widest opacity-40 ml-4"
+              className="text-[10px] font-black uppercase tracking-widest opacity-60 ml-4"
             >
               Password
             </label>
@@ -58,7 +58,7 @@ export default function LoginPage() {
         </button>
 
         <div className="text-center">
-          <p className="text-[10px] font-black opacity-20 uppercase tracking-widest">
+          <p className="text-[10px] font-black opacity-60 uppercase tracking-widest">
             Don't have an account?{" "}
             <Link
               href="/register"

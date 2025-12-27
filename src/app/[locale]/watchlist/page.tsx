@@ -24,7 +24,7 @@ export default async function WatchlistPage({
           </h1>
           <div className="flex items-center gap-4">
             <div className="h-[1px] w-12 bg-ui-accent-primary" />
-            <p className="opacity-40 font-black uppercase tracking-[0.3em] text-[10px]">
+            <p className="opacity-80 font-black uppercase tracking-[0.3em] text-[10px]">
               {t("subtitle")}
             </p>
           </div>
@@ -64,10 +64,10 @@ async function WatchlistContent() {
           <Bookmark className="w-8 h-8 opacity-20" />
         </div>
         <div className="text-center">
-          <p className="opacity-40 font-black uppercase tracking-[0.2em] text-sm mb-2">
+          <p className="opacity-80 font-black uppercase tracking-[0.2em] text-sm mb-2">
             {t("empty")}
           </p>
-          <p className="opacity-20 text-xs font-bold uppercase tracking-widest">
+          <p className="opacity-60 text-xs font-bold uppercase tracking-widest">
             {t("emptySubtitle")}
           </p>
         </div>

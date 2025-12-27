@@ -49,7 +49,8 @@ export default function SearchPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("placeholder")}
-            className="w-full bg-ui-text/5 border border-ui-border/10 py-8 pl-20 pr-10 text-2xl font-bold focus:outline-none focus:border-ui-accent-primary/50 focus:bg-ui-text/[0.07] transition-all shadow-2xl placeholder:opacity-10"
+            aria-label={t("placeholder")}
+            className="w-full bg-ui-text/5 border border-ui-border/10 py-8 pl-20 pr-10 text-2xl font-bold focus:outline-none focus:border-ui-accent-primary/50 focus:bg-ui-text/[0.07] transition-all shadow-2xl placeholder:opacity-30"
           />
           {isLoading && (
             <Loader2 className="absolute right-8 top-1/2 -translate-y-1/2 text-ui-accent-primary w-8 h-8 animate-spin" />

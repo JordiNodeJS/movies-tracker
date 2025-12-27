@@ -22,6 +22,7 @@ export function MovieCard({
     <Link
       href={`/movie/${movie.id}`}
       className="group relative block aspect-[2/3] overflow-hidden border-2 border-ui-border/20 bg-ui-text/5 transition-all duration-500 hover:scale-[1.03] hover:border-ui-accent-primary hover:shadow-[0_0_30px_var(--ui-glow)]"
+      aria-label={`${t("viewDetails")} ${movie.title}`}
     >
       {movie.poster_path ? (
         <Image
