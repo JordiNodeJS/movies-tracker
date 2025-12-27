@@ -5,7 +5,7 @@ import { verifyJWT } from "./lib/jwt";
 
 const intlMiddleware = createMiddleware(routing);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   try {
     const { pathname } = request.nextUrl;
 
@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
           }
         } catch (e) {
           // If verification fails, we treat as unauthenticated
-          console.error("Middleware JWT verification failed:", e);
+          console.error("Proxy JWT verification failed:", e);
         }
       }
 
@@ -48,8 +48,8 @@ export async function middleware(request: NextRequest) {
     // 2. Run intl middleware for all other cases
     return intlMiddleware(request);
   } catch (error) {
-    // If anything fails, we want to avoid a 500 error at the middleware level
-    console.error("Critical middleware error:", error);
+    // If anything fails, we want to avoid a 500 error at the proxy level
+    console.error("Critical proxy error:", error);
     return NextResponse.next();
   }
 }
