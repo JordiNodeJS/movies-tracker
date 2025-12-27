@@ -228,6 +228,7 @@ export async function getProfileData() {
       : "0.0";
 
   return {
+    userId: user.id,
     ratings,
     notes,
     recommendations,
