@@ -4,8 +4,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { Bookmark } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-
-const MOCK_USER_ID = process.env.DEMO_USER_ID || "demo-user-001";
+import { ensureUser } from "@/lib/actions";
 
 export default async function WatchlistPage({
   params,
@@ -41,13 +40,15 @@ export default async function WatchlistPage({
 
 async function WatchlistContent() {
   await connection();
+  const user = await ensureUser();
+
   const [watchlist, ratings] = await Promise.all([
     prisma.watchlistItem.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
       orderBy: { addedAt: "desc" },
     }),
     prisma.rating.findMany({
-      where: { userId: MOCK_USER_ID },
+      where: { userId: user.id },
     }),
   ]);
 

@@ -44,6 +44,7 @@ async function MovieContent({
             fill
             className="object-cover opacity-30 blur-[2px]"
             priority
+            sizes="100vw"
           />
         ) : (
           <div className="absolute inset-0 bg-zinc-900" />
@@ -73,6 +74,7 @@ async function MovieContent({
                     fill
                     className="object-cover"
                     priority
+                    sizes="(max-width: 768px) 100vw, 400px"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-white/5">

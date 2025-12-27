@@ -56,8 +56,8 @@ export async function toggleWatchlist(
 
   revalidatePath(`/movie/${movieId}`);
   revalidatePath("/watchlist");
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function saveNote(
@@ -86,8 +86,8 @@ export async function saveNote(
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function saveRating(
@@ -116,8 +116,8 @@ export async function saveRating(
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function deleteNote(movieId: number) {
@@ -133,8 +133,8 @@ export async function deleteNote(movieId: number) {
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function deleteRating(movieId: number) {
@@ -150,8 +150,8 @@ export async function deleteRating(movieId: number) {
   });
 
   revalidatePath(`/movie/${movieId}`);
-  revalidateTag("recommendations");
-  revalidateTag(`movie-${movieId}`);
+  revalidateTag("recommendations", "max");
+  revalidateTag(`movie-${movieId}`, "max");
 }
 
 export async function getMovieUserData(movieId: number) {
