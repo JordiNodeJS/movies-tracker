@@ -7,6 +7,12 @@ const TMDB_ACCESS_TOKEN =
   process.env.TMDB_ACCESS_TOKEN || process.env.TMDB_READ_ACCESS_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3";
 
+console.log("TMDB Config:", {
+  hasAccessToken: !!process.env.TMDB_ACCESS_TOKEN,
+  hasReadAccessToken: !!process.env.TMDB_READ_ACCESS_TOKEN,
+  usingToken: TMDB_ACCESS_TOKEN === process.env.TMDB_ACCESS_TOKEN ? "TMDB_ACCESS_TOKEN" : "TMDB_READ_ACCESS_TOKEN"
+});
+
 export interface Movie {
   id: number;
   title: string;

@@ -6,7 +6,7 @@ import ws from "ws";
 neonConfig.webSocketConstructor = ws;
 
 const prismaClientSingleton = () => {
-  const connectionString = process.env.DATABASE_URL;
+  const connectionString = process.env.DATABASE_URL?.replace(/\"/g, "").trim();
   if (!connectionString) {
     if (process.env.NODE_ENV === "production") {
       throw new Error("DATABASE_URL is not set in production.");
@@ -16,6 +16,8 @@ const prismaClientSingleton = () => {
     );
     return new PrismaClient();
   }
+
+  console.log("Initializing Prisma with Neon adapter...");
 
   const pool = new Pool({
     connectionString: connectionString,
