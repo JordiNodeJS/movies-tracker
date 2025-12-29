@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -52,7 +53,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider
           attribute="class"
@@ -64,7 +65,8 @@ export default async function RootLayout({
             <Suspense fallback={<div className="h-20 bg-black/40" />}>
               <Navbar />
             </Suspense>
-            <main>{children}</main>
+            <main className="flex-grow">{children}</main>
+            <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
