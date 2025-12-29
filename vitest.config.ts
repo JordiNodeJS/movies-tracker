@@ -12,7 +12,6 @@ export default defineConfig({
     setupFiles: [path.join(rootDir, "__tests__/setup.ts")],
     testTimeout: 30000,
     isolate: true,
-    threads: true,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],
