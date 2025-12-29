@@ -1,10 +1,11 @@
+import { describe, it, expect, beforeEach, afterAll, vi } from "vitest";
 import { validateEnvironmentVariables } from "@/lib/env-validator";
 
 describe("Environment Variables Validation", () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
+    vi.resetModules();
     process.env = { ...originalEnv };
   });
 
