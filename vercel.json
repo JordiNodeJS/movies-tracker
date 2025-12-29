@@ -1,9 +1,11 @@
 {
-    "github": {
-        "silent": false,
-        "enabled": true
-    },
     "buildCommand": "pnpm build",
     "installCommand": "pnpm install",
-    "framework": "nextjs"
+    "framework": "nextjs",
+    "nodeVersion": "20.x",
+    "github": {
+        "enabled": true,
+        "autoAlias": true
+    },
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD -- src/ package.json pnpm-lock.yaml prisma/"
 }
