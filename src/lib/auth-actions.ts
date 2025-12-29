@@ -15,19 +15,41 @@ export async function register(formData: FormData) {
       throw new Error("Invalid input");
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    // Check if user exists
+    let existingUser;
+    try {
+      existingUser = await prisma.user.findUnique({ where: { email } });
+    } catch (dbError) {
+      console.error("Database error checking user:", dbError);
+      throw new Error(
+        process.env.NODE_ENV === "production"
+          ? "Database connection failed. Please contact support."
+          : `Database error: ${dbError instanceof Error ? dbError.message : "Unknown error"}`
+      );
+    }
+
     if (existingUser) {
       throw new Error("User already exists");
     }
 
     const hashedPassword = await hashPassword(password);
 
-    await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-      },
-    });
+    // Create new user
+    try {
+      await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+        },
+      });
+    } catch (dbError) {
+      console.error("Database error creating user:", dbError);
+      throw new Error(
+        process.env.NODE_ENV === "production"
+          ? "Failed to create user. Please try again later."
+          : `Database error: ${dbError instanceof Error ? dbError.message : "Unknown error"}`
+      );
+    }
   } catch (error) {
     console.error("Registration error:", error);
     if (error instanceof Error && error.message === "NEXT_REDIRECT") {
@@ -48,7 +70,19 @@ export async function login(formData: FormData) {
     const password = formData.get("password") as string;
 
     console.log("Finding user in DB...");
-    const user = await prisma.user.findUnique({ where: { email } });
+
+    let user;
+    try {
+      user = await prisma.user.findUnique({ where: { email } });
+    } catch (dbError) {
+      console.error("Database error fetching user:", dbError);
+      throw new Error(
+        process.env.NODE_ENV === "production"
+          ? "Database connection failed. Please try again later."
+          : `Database error: ${dbError instanceof Error ? dbError.message : "Unknown error"}`
+      );
+    }
+
     console.log("User found:", !!user);
 
     if (!user || !user.password) {

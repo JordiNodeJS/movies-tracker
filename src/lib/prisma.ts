@@ -2,9 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import dotenv from "dotenv";
 import path from "path";
+import { validateEnvironmentVariables } from "@/lib/env-validator";
 
 // Ensure env vars are loaded
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
+
+// Validate environment variables on startup
+validateEnvironmentVariables();
 
 const prismaClientSingleton = () => {
   console.log("🔍 Initializing Prisma Client with Neon HTTP adapter...");
