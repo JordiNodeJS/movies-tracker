@@ -88,7 +88,12 @@
     "viewAll": "Ver Todo",
     "topRatings": "Mejores Calificaciones",
     "noJournal": "Aún no hay entradas en el diario",
-    "noRatings": "Aún no hay calificaciones"
+    "noRatings": "Aún no hay calificaciones",
+    "settings": "Configuración de la Cuenta",
+    "nameLabel": "Nombre",
+    "emailLabel": "Correo Electrónico",
+    "passwordLabel": "Nueva Contraseña (dejar en blanco para mantener la actual)",
+    "saveChanges": "Guardar Cambios"
   },
   "Common": {
     "noPoster": "Sin Póster",

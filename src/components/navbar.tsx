@@ -14,16 +14,16 @@ export async function Navbar() {
   return (
     <>
       <nav className="sticky top-0 z-50 w-full border-b-2 border-ui-border bg-ui-bg/80 backdrop-blur-2xl scanlines">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-2 sm:gap-4">
           <Link
             href="/"
-            className="flex items-center gap-3 group shrink-0"
+            className="flex items-center gap-2 sm:gap-3 group shrink-0"
             aria-label="MoviesTracker Home"
           >
-            <div className="w-10 h-10 bg-ui-accent-primary flex items-center justify-center group-hover:skew-x-12 transition-transform duration-500 shadow-[0_0_15px_var(--ui-accent-primary)]">
-              <Film className="w-6 h-6 text-black" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-ui-accent-primary flex items-center justify-center group-hover:skew-x-12 transition-transform duration-500 shadow-[0_0_15px_var(--ui-accent-primary)]">
+              <Film className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
             </div>
-            <span className="text-2xl font-black tracking-tighter uppercase italic">
+            <span className="text-xl sm:text-2xl font-black tracking-tighter uppercase italic">
               Movies
               <span className="text-ui-accent-primary neon-text-cyan">
                 Tracker
@@ -31,7 +31,7 @@ export async function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-4 xl:gap-8">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-8">
             <NavLink
               href="/"
               icon={<Film className="w-4 h-4" />}
@@ -137,7 +137,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="text-sm font-black uppercase tracking-[0.2em] opacity-70 hover:opacity-100 transition-all flex items-center gap-2 group hover:text-ui-accent-primary hover:neon-text-cyan"
+      className="text-[10px] xl:text-sm font-black uppercase tracking-[0.1em] xl:tracking-[0.2em] opacity-70 hover:opacity-100 transition-all flex items-center gap-1.5 xl:gap-2 group hover:text-ui-accent-primary hover:neon-text-cyan"
     >
       <span className="group-hover:skew-x-12 transition-transform">{icon}</span>
       <span>{label}</span>

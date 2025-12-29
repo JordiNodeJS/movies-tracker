@@ -88,7 +88,12 @@
     "viewAll": "Veure Tot",
     "topRatings": "Millors Qualificacions",
     "noJournal": "Encara no hi ha entrades al diari",
-    "noRatings": "Encara no hi ha qualificacions"
+    "noRatings": "Encara no hi ha qualificacions",
+    "settings": "Configuració del Compte",
+    "nameLabel": "Nom",
+    "emailLabel": "Correu Electrònic",
+    "passwordLabel": "Nova Contrasenya (deixar en blanc per mantenir l'actual)",
+    "saveChanges": "Guardar Canvis"
   },
   "Common": {
     "noPoster": "Sense Pòster",
