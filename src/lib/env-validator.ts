@@ -38,9 +38,12 @@ export function validateEnvironmentVariables() {
           `❌ ${varName} has invalid format. Should be a PostgreSQL connection string.`
         );
       }
-      if (!value.includes("search_path=")) {
+      if (
+        !value.includes("search_path=") &&
+        !value.includes("search_path%3D")
+      ) {
         warnings.push(
-          `⚠️ ${varName} may not include schema specification. Expected: ?options=-csearch_path%3D%22movies-tracker%22`
+          `⚠️ ${varName} may not include schema specification. Expected: ?options=-csearch_path%3D%22movies-tracker%22 or &search_path=movies-tracker`
         );
       }
     }
