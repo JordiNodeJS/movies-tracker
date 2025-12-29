@@ -26,7 +26,7 @@ Vercel (❌ Error 500):
 De tu `.env.local` actual, necesitas estos valores:
 
 ```env
-DATABASE_URL=postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
+DATABASE_URL=postgresql://neondb_owner:<REDACTED>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
 
 JWT_SECRET=development_secret_key_for_movies_tracker
 
@@ -52,7 +52,7 @@ TMDB_READ_ACCESS_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDUxNzQwOTY5NzYzMWQ2MDEw
 
 ```
 KEY: DATABASE_URL
-VALUE: postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
+VALUE: postgresql://neondb_owner:<REDACTED>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
 ENVIRONMENTS: Production, Preview, Development
 ```
 

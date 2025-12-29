@@ -15,7 +15,7 @@ echo ""
 # Generar JWT_SECRET
 JWT_SECRET_VALUE="$(node -e "require('crypto').randomBytes(32).toString('hex')" 2>/dev/null || echo "6f7e8d9c0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p")"
 
-DATABASE_URL_VALUE="postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22"
+DATABASE_URL_VALUE="postgresql://neondb_owner:<REDACTED>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22"
 TMDB_TOKEN_VALUE="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDUxNzQwOTY5NzYzMWQ2MDEwN2E0ZjUyMzFlNmM3MiIsIm5iZiI6MTc2NjQ0NDkxNC42ODMsInN1YiI6IjY5NDljZjcyNmQzNjU2MDBmYWZiMWE0YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NowHJhmYPsvo9a4eyHKCBX60RdFmHk6-4H9DlFIYuwU"
 
 echo "✅ Variables a configurar:"

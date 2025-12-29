@@ -12,7 +12,7 @@ This file documents the exact environment variables needed for production deploy
 **Value Example**:
 
 ```
-postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
+postgresql://neondb_owner:<REDACTED>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
 ```
 
 **Where to find**:

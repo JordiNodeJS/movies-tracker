@@ -75,7 +75,7 @@ De tu `.env.local` actual, necesitas copiar exactamente:
 
 ```env
 # From .env.local, copy these exact values
-DATABASE_URL=postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
+DATABASE_URL=postgresql://neondb_owner:<REDACTED>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
 
 JWT_SECRET=development_secret_key_for_movies_tracker
 # ⚠️ Para producción, genera uno más fuerte con:
@@ -92,7 +92,7 @@ TMDB_READ_ACCESS_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDUxNzQwOTY5NzYzMWQ2MDEw
 4. Click en: **Environment Variables** (left sidebar)
 5. **Agregar cada variable**:
    - Key: `DATABASE_URL`
-   - Value: `postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@...`
+   - Value: `postgresql://neondb_owner:<REDACTED>@...`
    - Environments: ✅ Production, ✅ Preview, ✅ Development
    - Click **Save**
 

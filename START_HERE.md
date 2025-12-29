@@ -28,7 +28,7 @@ Settings → Environment Variables → Add New
 
 ```
 Key: DATABASE_URL
-Value: postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
+Value: postgresql://neondb_owner:<REDACTED>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
 Environments: ✅ Production ✅ Preview ✅ Development
 ```
 

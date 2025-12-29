@@ -264,14 +264,14 @@ export async function register(formData: FormData) {
 
 ```env
 # LOCAL (.env.local)
-DATABASE_URL=postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
+DATABASE_URL=postgresql://neondb_owner:<REDACTED>@<REDACTED>/neondb?sslmode=require&channel_binding=require&options=-csearch_path%3D%22movies-tracker%22
 ```
 
 **Componentes**:
 
 - `postgresql://` - Protocolo PostgreSQL
 - `neondb_owner` - Usuario Neon
-- `<REDACTED_NEON_PASSWORD>` - Contraseña Neon
+- `<REDACTED>` - Contraseña Neon
 - `@ep-aged-night-...` - Host Neon (EU-West-2)
 - `/neondb` - Base de datos (siempre "neondb" en Neon)
 - `?sslmode=require` - Requiere SSL
@@ -402,7 +402,7 @@ https://vercel.com/dashboard/projects/movies-tracker/deployments
 
 ```bash
 # Copiar desde .env.local
-DATABASE_URL=postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@...
+DATABASE_URL=postgresql://neondb_owner:<REDACTED>@...
 
 # Generar JWT_SECRET nuevo
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
@@ -420,7 +420,7 @@ TMDB_READ_ACCESS_TOKEN=eyJhbGciOiJIUzI1NiJ9...
 3. Settings → Environment Variables
 4. Click "Add New"
 5. Key: DATABASE_URL
-6. Value: postgresql://neondb_owner:<REDACTED_NEON_PASSWORD>@...
+6. Value: postgresql://neondb_owner:<REDACTED>@...
 7. Environments: ✅ Production ✅ Preview ✅ Development
 8. Click "Save"
 9. Repetir para JWT_SECRET y TMDB_READ_ACCESS_TOKEN
