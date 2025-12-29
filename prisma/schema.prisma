@@ -1,35 +1,36 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String          @id @default(cuid())
-  email         String          @unique
-  password      String?
-  name          String?
-  watchlist     WatchlistItem[]
-  ratings       Rating[]
-  notes         Note[]
-  preferences   UserPreference?
-  viewHistory   ViewHistory[]
+  id              String           @id @default(cuid())
+  email           String           @unique
+  name            String?
+  password        String?
+  notes           Note[]
+  ratings         Rating[]
   recommendations Recommendation[]
+  preferences     UserPreference?
+  viewHistory     ViewHistory[]
+  watchlist       WatchlistItem[]
 
   @@map("users")
 }
 
 model WatchlistItem {
-  id         String   @id @default(cuid())
-  userId     String
-  movieId    Int
-  title      String
-  posterPath String?
+  id          String   @id @default(cuid())
+  userId      String
+  movieId     Int
+  title       String
+  posterPath  String?
   voteAverage Float?   @default(0)
-  addedAt    DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  addedAt     DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, movieId])
   @@map("watchlist_items")
@@ -42,7 +43,7 @@ model Rating {
   title       String?
   posterPath  String?
   voteAverage Float?   @default(0)
-  value       Int // 1-10
+  value       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -58,7 +59,7 @@ model Note {
   title       String?
   posterPath  String?
   voteAverage Float?   @default(0)
-  content     String   @db.Text
+  content     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -68,20 +69,20 @@ model Note {
 }
 
 model UserPreference {
-  id             String   @id @default(cuid())
-  userId         String   @unique
-  favoriteGenres Int[]    // Array of genre IDs
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String @id @default(cuid())
+  userId         String @unique
+  favoriteGenres Int[]
+  user           User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("user_preferences")
 }
 
 model ViewHistory {
-  id        String   @id @default(cuid())
-  userId    String
-  movieId   Int
-  viewedAt  DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id       String   @id @default(cuid())
+  userId   String
+  movieId  Int
+  viewedAt DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("view_history")
 }
@@ -103,8 +104,8 @@ model Recommendation {
 }
 
 model GenreCache {
-  id    Int    @id
-  name  String
+  id   Int    @id
+  name String
 
   @@map("genre_cache")
 }

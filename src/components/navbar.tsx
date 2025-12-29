@@ -14,10 +14,10 @@ export async function Navbar() {
   return (
     <>
       <nav className="sticky top-0 z-50 w-full border-b-2 border-ui-border bg-ui-bg/80 backdrop-blur-2xl scanlines">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
           <Link
             href="/"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-3 group shrink-0"
             aria-label="MoviesTracker Home"
           >
             <div className="w-10 h-10 bg-ui-accent-primary flex items-center justify-center group-hover:skew-x-12 transition-transform duration-500 shadow-[0_0_15px_var(--ui-accent-primary)]">
@@ -31,7 +31,7 @@ export async function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-8">
             <NavLink
               href="/"
               icon={<Film className="w-4 h-4" />}
@@ -89,7 +89,7 @@ export async function Navbar() {
           </div>
 
           {/* Mobile Menu Button (Simplified for now) */}
-          <div className="md:hidden flex items-center gap-4">
+          <div className="lg:hidden flex items-center gap-4">
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
@@ -97,7 +97,7 @@ export async function Navbar() {
       </nav>
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-ui-bg/90 backdrop-blur-2xl border-t-2 border-ui-border scanlines">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-ui-bg/90 backdrop-blur-2xl border-t-2 border-ui-border scanlines">
         <div className="flex items-center justify-around h-20 px-4">
           <MobileNavLink
             href="/"
