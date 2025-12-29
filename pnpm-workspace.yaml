@@ -1,7 +1,0 @@
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - '@prisma/engines'
-  - '@swc/core'
-  - prisma
-  - sharp
-  - unrs-resolver
