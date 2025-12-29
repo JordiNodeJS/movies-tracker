@@ -78,8 +78,6 @@ export async function login(formData: FormData) {
 
   redirect("/en");
 }
-  redirect("/en");
-}
 
 export async function logout() {
   (await cookies()).delete("auth_token");
