@@ -6,35 +6,35 @@ import ws from "ws";
 neonConfig.webSocketConstructor = ws;
 
 const prismaClientSingleton = () => {
-  const connectionString = process.env.DATABASE_URL?.replace(/\\n/g, "")
+  console.log("prismaClientSingleton called. NODE_ENV:", process.env.NODE_ENV);
+  const rawConnectionString = process.env.DATABASE_URL;
+  console.log("Raw DATABASE_URL present:", !!rawConnectionString);
+
+  const connectionString = rawConnectionString?.replace(/\\n/g, "")
     .replace(/\"/g, "")
     .trim();
 
   if (connectionString) {
-    console.log("Connection string length:", connectionString.length);
+    console.log("Sanitized connection string length:", connectionString.length);
     console.log(
-      "Connection string starts with:",
-      connectionString.substring(0, 20)
-    );
-    console.log(
-      "Connection string ends with:",
-      connectionString.substring(connectionString.length - 20)
+      "Sanitized connection string starts with:",
+      connectionString.substring(0, 15) + "..."
     );
   }
 
   if (!connectionString) {
+    console.error("DATABASE_URL is missing or empty after sanitization!");
     if (process.env.NODE_ENV === "production") {
       throw new Error("DATABASE_URL is not set in production.");
     }
-    console.warn(
-      "DATABASE_URL is not set. Prisma client will be initialized without a connection string."
-    );
     return new PrismaClient();
   }
 
   console.log("Initializing Prisma with Neon adapter...");
 
   const pool = new Pool({
+    connectionString: connectionString,
+  });
     connectionString: connectionString,
   });
   const adapter = new PrismaNeon(pool as any);
