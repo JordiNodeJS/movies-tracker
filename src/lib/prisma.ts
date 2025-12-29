@@ -6,7 +6,9 @@ import ws from "ws";
 neonConfig.webSocketConstructor = ws;
 
 const prismaClientSingleton = () => {
-  const connectionString = process.env.DATABASE_URL?.replace(/\"/g, "").trim();
+  const connectionString = process.env.DATABASE_URL?.replace(/\\n/g, "")
+    .replace(/\"/g, "")
+    .trim();
   if (!connectionString) {
     if (process.env.NODE_ENV === "production") {
       throw new Error("DATABASE_URL is not set in production.");

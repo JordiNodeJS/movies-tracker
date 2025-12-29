@@ -5,7 +5,9 @@ import { SignJWT, jwtVerify } from "jose";
  * Returns null if the secret is not defined.
  */
 function getSecret() {
-  const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET?.replace(/\\n/g, "")
+    .replace(/\"/g, "")
+    .trim();
   if (!secret) {
     return null;
   }
