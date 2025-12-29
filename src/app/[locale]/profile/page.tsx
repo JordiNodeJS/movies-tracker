@@ -1,7 +1,15 @@
 import { getProfileData } from "@/lib/actions";
 import { prisma } from "@/lib/prisma";
-import { Star, MessageSquare, Quote, Bookmark, Loader2 } from "lucide-react";
+import {
+  Star,
+  MessageSquare,
+  Quote,
+  Bookmark,
+  Loader2,
+  Settings,
+} from "lucide-react";
 import { RecommendationButton } from "@/components/recommendation-button";
+import { ProfileForm } from "@/components/profile-form";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -82,6 +90,21 @@ async function ProfileContent() {
             value={data.stats.watchlist.toString()}
           />
           <StatCard label={t("averageRating")} value={data.stats.avgRating} />
+        </div>
+      </section>
+
+      <section className="space-y-10">
+        <div className="flex items-center gap-4">
+          <Settings className="w-8 h-8 text-ui-accent-primary" />
+          <h2 className="text-4xl font-black tracking-tighter uppercase">
+            {t("settings")}
+          </h2>
+        </div>
+        <div className="max-w-2xl">
+          <ProfileForm
+            initialEmail={user?.email || ""}
+            initialName={user?.name || null}
+          />
         </div>
       </section>
 

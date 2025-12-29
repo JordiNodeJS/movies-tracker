@@ -88,7 +88,12 @@
     "viewAll": "View All",
     "topRatings": "Top Ratings",
     "noJournal": "No journal entries yet",
-    "noRatings": "No ratings yet"
+    "noRatings": "No ratings yet",
+    "settings": "Account Settings",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "passwordLabel": "New Password (leave blank to keep current)",
+    "saveChanges": "Save Changes"
   },
   "Common": {
     "noPoster": "No Poster",
