@@ -2,7 +2,9 @@
 // Using default cacheLife for TMDB API data.
 // Revalidates every 15 minutes by default in Next.js 16.
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY?.replace(/\\n/g, "").replace(/\"/g, "").trim();
+const TMDB_API_KEY = process.env.TMDB_API_KEY?.replace(/\\n/g, "")
+  .replace(/\"/g, "")
+  .trim();
 const TMDB_ACCESS_TOKEN = (
   process.env.TMDB_ACCESS_TOKEN ||
   process.env.TMDB_READ_ACCESS_TOKEN ||
