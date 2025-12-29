@@ -303,6 +303,11 @@ export async function fetchTMDB(
 
   // Return mock data if no valid credentials
   if (!hasValidCredentials) {
+    if (process.env.NODE_ENV === "production") {
+      console.error(
+        "CRITICAL: TMDB_ACCESS_TOKEN is missing or invalid in production. Falling back to mock data."
+      );
+    }
     return getMockData(endpoint);
   }
 

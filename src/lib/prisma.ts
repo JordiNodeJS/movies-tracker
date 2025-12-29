@@ -1,20 +1,26 @@
 import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import pg from "pg";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { Pool, neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
+
+neonConfig.webSocketConstructor = ws;
 
 const prismaClientSingleton = () => {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("DATABASE_URL is not set in production.");
+    }
     console.warn(
       "DATABASE_URL is not set. Prisma client will be initialized without a connection string."
     );
     return new PrismaClient();
   }
 
-  const pool = new pg.Pool({
-    connectionString: connectionString.replace(/\"/g, "").trim(),
+  const pool = new Pool({
+    connectionString: connectionString,
   });
-  const adapter = new PrismaPg(pool);
+  const adapter = new PrismaNeon(pool);
 
   return new PrismaClient({ adapter });
 };
