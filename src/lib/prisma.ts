@@ -9,6 +9,19 @@ const prismaClientSingleton = () => {
   const connectionString = process.env.DATABASE_URL?.replace(/\\n/g, "")
     .replace(/\"/g, "")
     .trim();
+
+  if (connectionString) {
+    console.log("Connection string length:", connectionString.length);
+    console.log(
+      "Connection string starts with:",
+      connectionString.substring(0, 20)
+    );
+    console.log(
+      "Connection string ends with:",
+      connectionString.substring(connectionString.length - 20)
+    );
+  }
+
   if (!connectionString) {
     if (process.env.NODE_ENV === "production") {
       throw new Error("DATABASE_URL is not set in production.");

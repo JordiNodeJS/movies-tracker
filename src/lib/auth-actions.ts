@@ -42,11 +42,14 @@ export async function register(formData: FormData) {
 }
 
 export async function login(formData: FormData) {
+  console.log("Login attempt for:", formData.get("email"));
   try {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
+    console.log("Finding user in DB...");
     const user = await prisma.user.findUnique({ where: { email } });
+    console.log("User found:", !!user);
 
     if (!user || !user.password) {
       throw new Error("Invalid credentials");
