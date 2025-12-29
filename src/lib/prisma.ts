@@ -18,8 +18,8 @@ const prismaClientSingleton = () => {
   console.log("✅ Creating Neon Pool with connection string");
 
   const pool = new Pool({ connectionString });
-  const adapter = new PrismaNeon(pool);
-  return new PrismaClient({ adapter } as any);
+  const adapter = new PrismaNeon(pool as any);
+  return new PrismaClient({ adapter });
 };
 
 declare global {
