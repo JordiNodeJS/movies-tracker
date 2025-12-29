@@ -20,7 +20,7 @@ const prismaClientSingleton = () => {
   const pool = new Pool({
     connectionString: connectionString,
   });
-  const adapter = new PrismaNeon(pool);
+  const adapter = new PrismaNeon(pool as any);
 
   return new PrismaClient({ adapter });
 };
