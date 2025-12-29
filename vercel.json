@@ -1,0 +1,9 @@
+{
+    "github": {
+        "silent": false,
+        "enabled": true
+    },
+    "buildCommand": "pnpm build",
+    "installCommand": "pnpm install",
+    "framework": "nextjs"
+}
