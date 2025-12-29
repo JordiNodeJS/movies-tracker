@@ -5,6 +5,9 @@
     "watchlist": "Watchlist",
     "profile": "Profile"
   },
+  "Footer": {
+    "createdBy": "Created by"
+  },
   "Home": {
     "title": "Cinematic",
     "obsession": "Obsession",

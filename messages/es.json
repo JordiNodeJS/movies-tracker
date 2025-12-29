@@ -5,6 +5,9 @@
     "watchlist": "Lista",
     "profile": "Perfil"
   },
+  "Footer": {
+    "createdBy": "Creado por"
+  },
   "Home": {
     "title": "Obsesión",
     "obsession": "Cinematográfica",
