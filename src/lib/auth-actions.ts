@@ -72,7 +72,11 @@ export async function login(formData: FormData) {
       path: "/",
     });
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Login error details:", error);
+    if (error instanceof Error) {
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+    }
     if (error instanceof Error && error.message === "NEXT_REDIRECT") {
       throw error;
     }
