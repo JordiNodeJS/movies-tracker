@@ -10,7 +10,8 @@ const prismaClientSingleton = () => {
   const rawConnectionString = process.env.DATABASE_URL;
   console.log("Raw DATABASE_URL present:", !!rawConnectionString);
 
-  const connectionString = rawConnectionString?.replace(/\\n/g, "")
+  const connectionString = rawConnectionString
+    ?.replace(/\\n/g, "")
     .replace(/\"/g, "")
     .trim();
 
