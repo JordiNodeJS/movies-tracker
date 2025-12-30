@@ -21,7 +21,7 @@ const prismaClientSingleton = () => {
   }
 
   // Clean up any trailing newline characters (from Vercel env injection)
-  dbUrl = dbUrl.trim().replace(/\\n$/, "");
+  dbUrl = dbUrl.trim().replace(/\\n/g, "").replace(/\\r/g, "");
 
   console.log("✅ DATABASE_URL found:", dbUrl.substring(0, 40) + "...");
 
