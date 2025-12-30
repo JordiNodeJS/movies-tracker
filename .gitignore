@@ -7,6 +7,19 @@ node_modules/
 .env.*
 !.env.example
 
+# Vercel - keep project.json but not credentials
+.vercel/
+.vercel/project.json
+
+# Scripts with credentials - should never be committed
+# Allow safe example scripts in scripts/ directory
+add_*.sh
+*_key.sh
+*_token.sh
+*_secret.sh
+!/scripts/add_vercel_env.sh
+!/scripts/setup-vercel-env.*
+
 # Next.js build outputs
 .next/
 out/
@@ -20,6 +33,5 @@ Thumbs.db
 # IDE files
 .vscode/
 .idea/
-.vercel
 .env*.local
 .traces/
