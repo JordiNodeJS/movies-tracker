@@ -380,7 +380,29 @@ async function getMockData(endpoint: string) {
   } else if (endpoint.includes("/movie/top_rated")) {
     return MOCK_TOP_RATED;
   } else if (endpoint.includes("/search/movie")) {
-    return MOCK_SEARCH;
+    // Extract query parameter from URL
+    const queryMatch = endpoint.match(/query=([^&]*)/);
+    const searchQuery = queryMatch
+      ? decodeURIComponent(queryMatch[1]).toLowerCase()
+      : "";
+
+    if (!searchQuery) {
+      return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+
+    // Filter movies that match the search query
+    const filteredResults = MOCK_MOVIES.filter(
+      (movie) =>
+        movie.title.toLowerCase().includes(searchQuery) ||
+        movie.overview.toLowerCase().includes(searchQuery)
+    );
+
+    return {
+      page: 1,
+      results: filteredResults.length > 0 ? filteredResults : [],
+      total_pages: Math.ceil(filteredResults.length / 20),
+      total_results: filteredResults.length,
+    };
   } else if (
     endpoint.includes("/movie/") &&
     !endpoint.includes("/genre/movie/list")
