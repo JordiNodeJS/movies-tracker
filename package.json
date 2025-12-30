@@ -4,7 +4,7 @@
     "description": "A movie tracking application built with Next.js",
     "scripts": {
         "dev": "pnpm dlx kill-port 3000 && next dev",
-        "build": "prisma generate && next build",
+        "build": "node scripts/clean-env.js && prisma generate && next build",
         "start": "next start",
         "lint": "eslint .",
         "test": "vitest",

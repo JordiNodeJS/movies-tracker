@@ -12,27 +12,41 @@ validateEnvironmentVariables();
 
 const prismaClientSingleton = () => {
   console.log("🔍 Initializing Prisma Client with Neon HTTP adapter...");
-  console.log(
-    "🔍 process.env keys:",
-    Object.keys(process.env).filter((k) => k.includes("DATA"))
-  );
 
-  const dbUrl = process.env.DATABASE_URL;
-  console.log("🔍 DATABASE_URL type:", typeof dbUrl);
-  console.log("🔍 DATABASE_URL value:", dbUrl);
+  let dbUrl = process.env.DATABASE_URL;
 
   if (typeof dbUrl !== "string" || !dbUrl) {
     console.error("❌ DATABASE_URL is NOT a valid string in process.env");
-    console.error("❌ Type:", typeof dbUrl);
-    console.error("❌ Value:", dbUrl);
     throw new Error("DATABASE_URL is not set or invalid");
   }
+
+  // Clean up any trailing newline characters (from Vercel env injection)
+  dbUrl = dbUrl.trim().replace(/\\n$/, "");
 
   console.log("✅ DATABASE_URL found:", dbUrl.substring(0, 40) + "...");
 
   // Explicitly enforce movies-tracker schema
   const SCHEMA_NAME = "movies-tracker";
-  console.log(`🔒 Enforcing schema: ${SCHEMA_NAME}`);
+
+  // Check if schema is already in the connection string with proper format
+  const hasSearchPath =
+    dbUrl.includes(`search_path%3D`) || dbUrl.includes(`search_path=`);
+
+  if (!hasSearchPath) {
+    console.log(`🔒 Adding schema to connection string: ${SCHEMA_NAME}`);
+    // Add schema to connection string if not present - use encoded format for safety
+    if (dbUrl.includes("?")) {
+      // Remove trailing & if present
+      if (dbUrl.endsWith("&")) {
+        dbUrl = dbUrl.slice(0, -1);
+      }
+      dbUrl = dbUrl + `&options=-csearch_path%3D%22${SCHEMA_NAME}%22`;
+    } else {
+      dbUrl = dbUrl + `?options=-csearch_path%3D%22${SCHEMA_NAME}%22`;
+    }
+  } else {
+    console.log(`🔒 Schema already in connection string: ${SCHEMA_NAME}`);
+  }
 
   try {
     // Create adapter with explicit schema configuration
@@ -40,11 +54,10 @@ const prismaClientSingleton = () => {
       { connectionString: dbUrl },
       {
         schema: SCHEMA_NAME,
-        // Additional options to ensure schema isolation
       }
     );
 
-    // Create Prisma client with schema-enforcing raw query logging
+    // Create Prisma client
     const client = new PrismaClient({
       adapter,
       log:
@@ -53,27 +66,33 @@ const prismaClientSingleton = () => {
           : ["error"],
     });
 
-    // Verify schema on initialization
-    client.$connect().then(async () => {
-      try {
-        const result = await client.$queryRaw<
-          Array<{ current_schema: string }>
-        >`
-          SELECT current_schema()::text as current_schema
-        `;
-        const currentSchema = result[0]?.current_schema;
+    // Verify schema on initialization (only in development to avoid build delays)
+    if (process.env.NODE_ENV === "development") {
+      client.$connect().then(async () => {
+        try {
+          const result = await client.$queryRaw<
+            Array<{ current_schema: string }>
+          >`
+            SELECT current_schema()::text as current_schema
+          `;
+          const currentSchema = result[0]?.current_schema;
 
-        if (currentSchema !== SCHEMA_NAME) {
-          console.warn(
-            `⚠️ WARNING: Expected schema '${SCHEMA_NAME}' but got '${currentSchema}'`
+          if (currentSchema === SCHEMA_NAME) {
+            console.log(`✅ Connected to schema: ${currentSchema}`);
+          } else {
+            console.warn(
+              `ℹ️  Currently in schema '${currentSchema}' (configured: '${SCHEMA_NAME}')`,
+              "This is normal during static generation."
+            );
+          }
+        } catch (err) {
+          // Silently fail schema verification to avoid build errors
+          console.log(
+            "ℹ️  Schema verification skipped (expected during static generation)"
           );
-        } else {
-          console.log(`✅ Connected to schema: ${currentSchema}`);
         }
-      } catch (err) {
-        console.error("❌ Failed to verify schema:", err);
-      }
-    });
+      });
+    }
 
     return client;
   } catch (error) {

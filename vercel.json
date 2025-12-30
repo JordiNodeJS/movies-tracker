@@ -1,10 +1,18 @@
 {
-    "buildCommand": "pnpm build",
+    "buildCommand": "node scripts/clean-env.js && pnpm build",
     "installCommand": "pnpm install",
     "framework": "nextjs",
     "github": {
         "enabled": true,
         "autoAlias": true
     },
-    "ignoreCommand": "git diff --quiet HEAD^ HEAD -- src/ package.json pnpm-lock.yaml prisma/"
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD -- src/ package.json pnpm-lock.yaml prisma/",
+    "env": {
+        "DATABASE_URL": {
+            "required": true
+        },
+        "JWT_SECRET": {
+            "required": true
+        }
+    }
 }
